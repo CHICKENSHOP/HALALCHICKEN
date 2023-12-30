@@ -4,16 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Your Business Data</title>
+    <title>Business Transactions Management</title>
 </head>
 <body>
-    <div id="data-container">
-        <!-- Your business data goes here -->
+    <div class="container">
+        <h1>Business Transactions Management</h1>
+
+        <label for="restaurant">Select Restaurant:</label>
+        <select id="restaurant">
+            <option value="restaurant1">Restaurant 1</option>
+            <option value="restaurant2">Restaurant 2</option>
+            <!-- Add more restaurants as needed -->
+        </select>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount">
+
+        <button id="addTransaction">Add Transaction</button>
+
+        <h2>Transactions</h2>
+        <ul id="transactionList"></ul>
+
+        <div id="balances"></div>
+
+        <h2>Total Due</h2>
+        <div id="totalDue"></div>
     </div>
 
-    <button id="generate-pdf">Generate PDF</button>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
