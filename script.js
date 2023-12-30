@@ -1,12 +1,12 @@
 const transactions = [];
 
 document.getElementById('addTransaction').addEventListener('click', function () {
-    const accountName = document.getElementById('accountName').value;
+    const restaurant = document.getElementById('restaurant').value;
     const amount = document.getElementById('amount').value;
 
-    if (accountName && amount) {
+    if (restaurant && amount) {
         const transaction = {
-            accountName: accountName,
+            restaurant: restaurant,
             amount: parseFloat(amount),
             date: new Date().toLocaleString()
         };
@@ -15,9 +15,10 @@ document.getElementById('addTransaction').addEventListener('click', function () 
 
         updateTransactionList();
         calculateBalances();
+        calculateTotalDue();
         clearInputFields();
     } else {
-        alert('Please enter both account name and amount.');
+        alert('Please select a restaurant and enter the amount.');
     }
 });
 
@@ -27,7 +28,7 @@ function updateTransactionList() {
 
     transactions.forEach(transaction => {
         const listItem = document.createElement('li');
-        listItem.textContent = `${transaction.accountName} - $${transaction.amount} - ${transaction.date}`;
+        listItem.textContent = `${transaction.restaurant} - $${transaction.amount} - ${transaction.date}`;
         transactionList.appendChild(listItem);
     });
 }
@@ -36,29 +37,33 @@ function calculateBalances() {
     const balances = {};
 
     transactions.forEach(transaction => {
-        if (!balances[transaction.accountName]) {
-            balances[transaction.accountName] = {
-                totalAmount: 0,
-                pendingAmount: 0
-            };
+        if (!balances[transaction.restaurant]) {
+            balances[transaction.restaurant] = 0;
         }
 
-        balances[transaction.accountName].totalAmount += transaction.amount;
-        balances[transaction.accountName].pendingAmount = balances[transaction.accountName].totalAmount;
+        balances[transaction.restaurant] += transaction.amount;
     });
 
     // Display balances
-    const balanceList = document.getElementById('balanceList');
-    balanceList.innerHTML = '<h2>Balances</h2>';
+    const balancesDiv = document.getElementById('balances');
+    balancesDiv.innerHTML = '<h2>Balances</h2>';
 
-    for (const accountName in balances) {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${accountName} - Total: $${balances[accountName].totalAmount.toFixed(2)} - Pending: $${balances[accountName].pendingAmount.toFixed(2)}`;
-        balanceList.appendChild(listItem);
+    for (const restaurant in balances) {
+        const balanceText = document.createElement('div');
+        balanceText.textContent = `${restaurant}: $${balances[restaurant].toFixed(2)}`;
+        balancesDiv.appendChild(balanceText);
     }
 }
 
+function calculateTotalDue() {
+    const totalDue = transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+
+    // Display total due
+    const totalDueDiv = document.getElementById('totalDue');
+    totalDueDiv.textContent = `Total Due: $${totalDue.toFixed(2)}`;
+}
+
 function clearInputFields() {
-    document.getElementById('accountName').value = '';
+    document.getElementById('restaurant').value = '';
     document.getElementById('amount').value = '';
 }
