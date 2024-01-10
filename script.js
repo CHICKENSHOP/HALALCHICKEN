@@ -8,7 +8,7 @@ function calculateTotalBill() {
     var previousBalance = parseFloat(document.getElementById('previousBalance').value);
 
     // Calculate total for Kori restaurant
-    if (selectedRestaurant === 'koriBakeway') {
+    if (selectedRestaurant === 'kori') {
         var totalWeightCost = weightOfChicken * pricePerKg;
         var totalQuantityCost = quantityOfChicken * 10;  // Assuming a fixed cost per chicken quantity
 
