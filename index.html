@@ -30,6 +30,22 @@
     <label for="pricePerKg">Price per Kg:</label>
     <input type="number" id="pricePerKg">
 
+    <!-- Input for other items (hidden by default) -->
+    <div id="otherItems" style="display: none;">
+        <label for="item1Price">Item 1 Price:</label>
+        <input type="number" id="item1Price">
+        <label for="item1Qty">Item 1 Quantity:</label>
+        <input type="number" id="item1Qty">
+
+        <!-- Repeat similar input fields for other items as needed -->
+        <!-- For example:
+        <label for="item2Price">Item 2 Price:</label>
+        <input type="number" id="item2Price">
+        <label for="item2Qty">Item 2 Quantity:</label>
+        <input type="number" id="item2Qty">
+        -->
+    </div>
+
     <!-- Input for previous balance -->
     <label for="previousBalance">Previous Balance:</label>
     <input type="number" id="previousBalance"><br>
@@ -40,13 +56,10 @@
     <!-- Display results -->
     <div id="result"></div>
 
-    <!-- Button to export to PDF -->
-    <button onclick="exportToPDF()">Export to PDF</button>
-
     <!-- Button to export as Image -->
     <button onclick="exportToImage()">Export as Image</button>
 
     <!-- Hidden input field to store details for PDF export -->
     <textarea id="exportDetails" style="display: none;"></textarea>
 </body>
-        </html>
+</html>
