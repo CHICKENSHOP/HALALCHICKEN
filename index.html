@@ -6,25 +6,26 @@
     <title>Restaurant Bill Calculator</title>
     <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 </head>
 <body>
     <h1>Restaurant Bill Calculator</h1>
-    <label for="restaurantName">Restaurant Name:</label>
-    <input type="text" id="restaurantName"><br>
+    
+    <!-- Dropdown for restaurant selection -->
+    <label for="restaurantSelect">Select Restaurant:</label>
+    <select id="restaurantSelect">
+        <option value="koriBakeway">Kori Bakeway</option>
+        <option value="sasi">Sasi</option>
+        <option value="kurtos">Kurtos</option>
+        <option value="bakewayKontamur">Bakeway Kontamur</option>
+        <option value="legendBar">Legend Bar</option>
+    </select><br>
 
     <!-- Input for chicken prices -->
-    <label for="bonelessPrice">Boneless Price:</label>
-    <input type="number" id="bonelessPrice">
-    <label for="bodyPrice">Body Price:</label>
-    <input type="number" id="bodyPrice">
-    <!-- ... (similar input fields for other items) -->
+    <!-- ... (previous input fields remain unchanged) -->
 
     <!-- Input for item quantities -->
-    <label for="bonelessQty">Boneless Quantity:</label>
-    <input type="number" id="bonelessQty">
-    <label for="bodyQty">Body Quantity:</label>
-    <input type="number" id="bodyQty">
-    <!-- ... (similar input fields for other items) -->
+    <!-- ... (previous input fields remain unchanged) -->
 
     <!-- Input for previous balance -->
     <label for="previousBalance">Previous Balance:</label>
@@ -38,6 +39,9 @@
 
     <!-- Button to export to PDF -->
     <button onclick="exportToPDF()">Export to PDF</button>
+
+    <!-- Button to export as Image -->
+    <button onclick="exportToImage()">Export as Image</button>
 
     <!-- Hidden input field to store details for PDF export -->
     <textarea id="exportDetails" style="display: none;"></textarea>
