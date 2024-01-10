@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,7 @@
     <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="script.js"></script>
 </head>
 <body>
     <h1>Mubarak Chicken Center</h1>
@@ -14,7 +15,7 @@
     <!-- Dropdown for restaurant selection -->
     <label for="restaurantSelect">Select Restaurant:</label>
     <select id="restaurantSelect">
-        <option value="koriBakeway">Kori Bakeway</option>
+        <option value="kori">Kori</option>
         <option value="sasi">Sasi</option>
         <option value="kurtos">Kurtos</option>
         <option value="bakewayKontamur">Bakeway Kontamur</option>
@@ -22,40 +23,12 @@
     </select><br>
 
     <!-- Input for chicken prices -->
-    <label for="bonelessPrice">Boneless Price:</label>
-    <input type="number" id="bonelessPrice">
-    <label for="bodyPrice">Body Price:</label>
-    <input type="number" id="bodyPrice">
-    <label for="lollipopPrice">Lollipop Price:</label>
-    <input type="number" id="lollipopPrice">
-    <label for="fryPrice">Fry Price:</label>
-    <input type="number" id="fryPrice">
-    <label for="jointPrice">Joint Price:</label>
-    <input type="number" id="jointPrice">
-    <label for="khawabPrice">Khawab Price:</label>
-    <input type="number" id="khawabPrice">
-    <label for="wingsPrice">Wings Price:</label>
-    <input type="number" id="wingsPrice">
-    <label for="dumPrice">Dum Price:</label>
-    <input type="number" id="dumPrice">
-
-    <!-- Input for item quantities -->
-    <label for="bonelessQty">Boneless Quantity:</label>
-    <input type="number" id="bonelessQty">
-    <label for="bodyQty">Body Quantity:</label>
-    <input type="number" id="bodyQty">
-    <label for="lollipopQty">Lollipop Quantity:</label>
-    <input type="number" id="lollipopQty">
-    <label for="fryQty">Fry Quantity:</label>
-    <input type="number" id="fryQty">
-    <label for="jointQty">Joint Quantity:</label>
-    <input type="number" id="jointQty">
-    <label for="khawabQty">Khawab Quantity:</label>
-    <input type="number" id="khawabQty">
-    <label for="wingsQty">Wings Quantity:</label>
-    <input type="number" id="wingsQty">
-    <label for="dumQty">Dum Quantity:</label>
-    <input type="number" id="dumQty">
+    <label for="weightOfChicken">Weight of Chicken (kg):</label>
+    <input type="number" id="weightOfChicken">
+    <label for="quantityOfChicken">Quantity of Chicken:</label>
+    <input type="number" id="quantityOfChicken">
+    <label for="pricePerKg">Price per Kg:</label>
+    <input type="number" id="pricePerKg">
 
     <!-- Input for previous balance -->
     <label for="previousBalance">Previous Balance:</label>
@@ -75,6 +48,5 @@
 
     <!-- Hidden input field to store details for PDF export -->
     <textarea id="exportDetails" style="display: none;"></textarea>
-    <script src="script.js"></script>
 </body>
-</html>
+        </html>
