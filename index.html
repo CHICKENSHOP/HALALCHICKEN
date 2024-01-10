@@ -3,34 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Bill Calculator</title>
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Business Transactions Management</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Business Transactions Management</h1>
+    <h1>Restaurant Bill Calculator</h1>
+    <label for="restaurantName">Restaurant Name:</label>
+    <input type="text" id="restaurantName"><br>
 
-        <label for="restaurant">Select Restaurant:</label>
-        <select id="restaurant">
-            <option value="restaurant1">Restaurant 1</option>
-            <option value="restaurant2">Restaurant 2</option>
-            <!-- Add more restaurants as needed -->
-        </select>
+    <!-- Input for chicken prices -->
+    <!-- ... (previous input fields remain unchanged) -->
 
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount">
+    <!-- Input for previous balance -->
+    <label for="previousBalance">Previous Balance:</label>
+    <input type="number" id="previousBalance"><br>
 
-        <button id="addTransaction">Add Transaction</button>
+    <!-- Button to calculate and display results -->
+    <button onclick="calculateTotalBill()">Calculate Total Bill</button>
 
-        <h2>Transactions</h2>
-        <ul id="transactionList"></ul>
+    <!-- Display result -->
+    <div id="result"></div>
 
-        <div id="balances"></div>
+    <!-- Button to export to PDF -->
+    <button onclick="exportToPDF()">Export to PDF</button>
 
-        <h2>Total Due</h2>
-        <div id="totalDue"></div>
-    </div>
-
+    <!-- Hidden input field to store details for PDF export -->
+    <textarea id="exportDetails" style="display: none;"></textarea>
     <script src="script.js"></script>
 </body>
 </html>
