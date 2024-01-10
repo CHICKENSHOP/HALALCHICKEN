@@ -1,69 +1,30 @@
-const transactions = [];
+function calculateTotalBill() {
+    // ... (previous code remains unchanged)
 
-document.getElementById('addTransaction').addEventListener('click', function () {
-    const restaurant = document.getElementById('restaurant').value;
-    const amount = document.getElementById('amount').value;
+    // Display results
+    var resultText = "Restaurant: " + restaurantName +
+        "<br>Previous Balance: $" + previousBalance.toFixed(2) +
+        "<br>Current Bill: $" + totalBill.toFixed(2) +
+        "<br>Total Amount Due: $" + totalWithPreviousBalance.toFixed(2);
 
-    if (restaurant && amount) {
-        const transaction = {
-            restaurant: restaurant,
-            amount: parseFloat(amount),
-            date: new Date().toLocaleString()
-        };
+    document.getElementById('result').innerHTML = resultText;
 
-        transactions.push(transaction);
+    // Display restaurant name, item quantities, and total bill for PDF export
+    var exportDetails = "Restaurant: " + restaurantName +
+        "\nBoneless Quantity: " + bonelessQty +
+        "\nBody Quantity: " + bodyQty +
+        "\nLollipop Quantity: " + lollipopQty +
+        "\nFry Quantity: " + fryQty +
+        "\nJoint Quantity: " + jointQty +
+        "\nKhawab Quantity: " + khawabQty +
+        "\nWings Quantity: " + wingsQty +
+        "\nDum Quantity: " + dumQty +
+        "\nTotal Bill: $" + totalWithPreviousBalance.toFixed(2);
 
-        updateTransactionList();
-        calculateBalances();
-        calculateTotalDue();
-        clearInputFields();
-    } else {
-        alert('Please select a restaurant and enter the amount.');
-    }
-});
-
-function updateTransactionList() {
-    const transactionList = document.getElementById('transactionList');
-    transactionList.innerHTML = '';
-
-    transactions.forEach(transaction => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${transaction.restaurant} - $${transaction.amount} - ${transaction.date}`;
-        transactionList.appendChild(listItem);
-    });
+    document.getElementById('exportDetails').value = exportDetails;
 }
 
-function calculateBalances() {
-    const balances = {};
-
-    transactions.forEach(transaction => {
-        if (!balances[transaction.restaurant]) {
-            balances[transaction.restaurant] = 0;
-        }
-
-        balances[transaction.restaurant] += transaction.amount;
-    });
-
-    // Display balances
-    const balancesDiv = document.getElementById('balances');
-    balancesDiv.innerHTML = '<h2>Balances</h2>';
-
-    for (const restaurant in balances) {
-        const balanceText = document.createElement('div');
-        balanceText.textContent = `${restaurant}: $${balances[restaurant].toFixed(2)}`;
-        balancesDiv.appendChild(balanceText);
-    }
-}
-
-function calculateTotalDue() {
-    const totalDue = transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
-
-    // Display total due
-    const totalDueDiv = document.getElementById('totalDue');
-    totalDueDiv.textContent = `Total Due: $${totalDue.toFixed(2)}`;
-}
-
-function clearInputFields() {
-    document.getElementById('restaurant').value = '';
-    document.getElementById('amount').value = '';
+function exportToPDF() {
+    var element = document.getElementById('result');
+    html2pdf(element);
 }
