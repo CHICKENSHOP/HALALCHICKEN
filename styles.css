@@ -1,16 +1,10 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+    margin: 20px;
 }
 
-.container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+h1 {
+    text-align: center;
 }
 
 label {
@@ -18,34 +12,25 @@ label {
     margin-bottom: 5px;
 }
 
-input, select {
-    width: 100%;
-    padding: 8px;
+input, button {
     margin-bottom: 10px;
 }
 
 button {
-    padding: 10px;
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-h2 {
+button:hover {
+    background-color: #45a049;
+}
+
+#result {
     margin-top: 20px;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 10px;
-}
-
-#balances {
-    margin-top: 20px;
-}
-
-#totalDue {
-    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 10px;
 }
