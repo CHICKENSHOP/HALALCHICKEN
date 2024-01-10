@@ -20,39 +20,15 @@ function calculateTotalBill() {
             "<br>Weight Cost: $" + totalWeightCost.toFixed(2) +
             "<br>Quantity Cost: $" + totalQuantityCost.toFixed(2) +
             "<br>Total Bill: $" + totalBill.toFixed(2) +
-            "<br>Total Amount Due: $" + totalWithPreviousBalance.toFixed(2);
+            "<br>Total Amount Due: $" + totalWithPreviousBalance.toFixed(2) +
+            "<br>Date and Time: " + getCurrentDateTime();
 
         document.getElementById('result').innerHTML = resultText;
 
-        var exportDetails = "Restaurant: " + selectedRestaurant +
-            "\nWeight of Chicken: " + weightOfChicken + " kg" +
-            "\nQuantity of Chicken: " + quantityOfChicken +
-            "\nPrice per Kg: $" + pricePerKg.toFixed(2) +
-            "\nTotal Weight Cost: $" + totalWeightCost.toFixed(2) +
-            "\nTotal Quantity Cost: $" + totalQuantityCost.toFixed(2) +
-            "\nTotal Bill: $" + totalBill.toFixed(2);
+        // Export as Image with date and time
+        exportToImageWithDateTime(resultText);
     } else {
+        // Show the input fields for other items
+        document.getElementById('otherItems').style.display = 'block';
+
         // Logic for other restaurants (similar to the existing code)
-        // ...
-    }
-
-    // Set exportDetails for PDF export
-    document.getElementById('exportDetails').value = exportDetails;
-}
-
-function exportToPDF() {
-    var element = document.getElementById('result');
-    var pdfName = document.getElementById('restaurantSelect').value + "_" + new Date().toLocaleDateString() + ".pdf";
-    html2pdf(element, { filename: pdfName });
-}
-
-function exportToImage() {
-    var element = document.getElementById('result');
-    domtoimage.toBlob(element)
-        .then(function (blob) {
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = document.getElementById('restaurantSelect').value + "_" + new Date().toLocaleDateString() + ".png";
-            link.click();
-        });
-}
