@@ -5,7 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Bill Calculator</title>
     <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, button {
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+    </style>
+    <script>
+        function calculateTotalBill() {
+            // ... (previous code remains unchanged)
+
+            // Display results
+            var resultText = "Restaurant: " + restaurantName +
+                "<br>Previous Balance: $" + previousBalance.toFixed(2) +
+                "<br>Current Bill: $" + totalBill.toFixed(2) +
+                "<br>Total Amount Due: $" + totalWithPreviousBalance.toFixed(2);
+
+            document.getElementById('result').innerHTML = resultText;
+
+            // Display restaurant name, item quantities, and total bill for PDF export
+            var exportDetails = "Restaurant: " + restaurantName +
+                "\nBoneless Quantity: " + bonelessQty +
+                "\nBody Quantity: " + bodyQty +
+                "\nLollipop Quantity: " + lollipopQty +
+                "\nFry Quantity: " + fryQty +
+                "\nJoint Quantity: " + jointQty +
+                "\nKhawab Quantity: " + khawabQty +
+                "\nWings Quantity: " + wingsQty +
+                "\nDum Quantity: " + dumQty +
+                "\nTotal Bill: $" + totalWithPreviousBalance.toFixed(2);
+
+            document.getElementById('exportDetails').value = exportDetails;
+        }
+
+        function exportToPDF() {
+            var element = document.getElementById('result');
+
+            html2pdf(element);
+        }
+    </script>
 </head>
 <body>
     <h1>Restaurant Bill Calculator</h1>
@@ -30,6 +100,5 @@
 
     <!-- Hidden input field to store details for PDF export -->
     <textarea id="exportDetails" style="display: none;"></textarea>
-    <script src="script.js"></script>
 </body>
 </html>
