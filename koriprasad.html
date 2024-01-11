@@ -4,24 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kori Prasad</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            color: #555;
+        }
+
+        #billDetails {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, button {
+            margin-bottom: 16px;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #calculationResult {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        #previousBalance {
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
-    <h1 lang="en">Welcome to Kori Prasad</h1>
-    <h1 lang="te">కొరి ప్రసాద్‌కు స్వాగతం</h1>
-
     <div id="billDetails">
-        <h2 lang="en">Bill Details</h2>
-        <h2 lang="te">బిల్ వివరాలు</h2>
+        <h1>Welcome to Kori Prasad</h1>
+
+        <h2>Bill Details</h2>
 
         <p id="previousBalance"></p>
 
-        <label for="amountPaid" lang="en">Amount Paid (in Rupees):</label>
-        <label for="amountPaid" lang="te">చెల్లించిన మొత్తం (రూపాయలులో):</label>
+        <label for="weightOfChicken">Weight of Chicken (in kg):</label>
+        <input type="number" id="weightOfChicken" step="0.01" required>
 
+        <label for="quantityOfChicken">Quantity of Chicken:</label>
+        <input type="number" id="quantityOfChicken" required>
+
+        <label for="pricePerKg">Price per Kg (in Rupees):</label>
+        <input type="number" id="pricePerKg" step="0.01" required>
+
+        <label for="amountPaid">Amount Paid (in Rupees):</label>
         <input type="number" id="amountPaid" step="0.01">
 
-        <button type="button" onclick="calculateBill()" lang="en">Calculate Bill</button>
-        <button type="button" onclick="calculateBill()" lang="te">బిల్ గణన</button>
+        <button type="button" onclick="calculateBill()">Calculate Bill</button>
 
         <p id="calculationResult"></p>
     </div>
@@ -31,15 +96,17 @@
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
 
     <script>
-        // Initialize Firebase
+        // Replace with your Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyA6tSdZQ6d8-5hgeTpYEwvNbW2cqC5Z0aQ",
-            authDomain: "mubarak-chicken.firebaseapp.com",
-            projectId: "mubarak-chicken",
-            storageBucket: "mubarak-chicken.appspot.com",
-            messagingSenderId: "160226866721",
-            appId: "1:160226866721:web:eb9ff0193554e21739d560"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
+
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
         // Reference to the Firestore database
@@ -63,4 +130,17 @@
                     }
                 })
                 .catch((error) => {
-                    console.error("Error getting
+                    console.error("Error getting document:", error);
+                });
+        }
+
+        // Function to calculate the bill
+        function calculateBill() {
+            const weightOfChicken = parseFloat(document.getElementById('weightOfChicken').value) || 0;
+            const quantityOfChicken = parseInt(document.getElementById('quantityOfChicken').value) || 0;
+            const pricePerKg = parseFloat(document.getElementById('pricePerKg').value) || 0;
+            const amountPaid = parseFloat(document.getElementById('amountPaid').value) || 0;
+
+            // Calculate total bill
+            const weightCost = weightOfChicken * pricePerKg;
+            const quantityCost = quantityOfChicken * 10; // Example: Multiply quantity by
