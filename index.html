@@ -169,6 +169,27 @@
       });
     }
   </script>
+  var customerDropdown = document.getElementById("customer");
+
+// Populate the customer dropdown with data from Firebase
+database.ref("customers").once("value")
+  .then(function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      var customerKey = childSnapshot.key;
+      var customerName = childSnapshot.val().name;
+      var option = document.createElement("option");
+      option.value = customerKey;
+      option.text = customerName;
+      customerDropdown.add(option);
+    });
+
+    // Initial update on page load
+    updateItemList();
+  })
+  .catch(function(error) {
+    console.error("Error loading customers: " + error);
+  });
+
 
 </body>
 </html>
