@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chicken Order Calculator</title>
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+</head>
+<body>
+    <h1>Chicken Order Calculator</h1>
+
+    <form id="orderForm">
+        <label for="weight" lang="en">Weight of Chicken (kg):</label>
+        <label for="weight" lang="te">చికెన్ బెరకు (కిలోగ్రామ్):</label>
+        <input type="number" id="weight" required step="0.01">
+
+        <label for="quantity" lang="en">Quantity of Chicken:</label>
+        <label for="quantity" lang="te">చికెన్ సంఖ్య:</label>
+        <input type="number" id="quantity" required>
+
+        <label for="price" lang="en">Price per kg (in Rupees):</label>
+        <label for="price" lang="te">ప్రతి కిలోగ్రామ్ ధర (రూపాయలులో):</label>
+        <input type="number" id="price" required step="0.01">
+
+        <button type="button" onclick="calculateBill()" lang="en">Calculate Bill</button>
+        <button type="button" onclick="calculateBill()" lang="te">బిల్ గణన</button>
+    </form>
+
+    <div id="billDetails" style="display:none;">
+        <div id="billDetails" style="display:none;">
+        <h2 lang="en">Bill Details</h2>
+        <h2 lang="te">బిల్ వివరాలు</h2>
+        <p id="calculationResult"></p>
+
+        <label for="paidAmount" lang="en">Paid Amount:</label>
+        <label for="paidAmount" lang="te">చెల్లించిన మొత్తం:</label>
+        <input type="number" id="paidAmount" required step="0.01">
+
+        <button type="button" onclick="calculateBalance()" lang="en">Calculate Balance</button>
+        <button type="button" onclick="calculateBalance()" lang="te">శేషం గణన</button>
+
+        <p id="balanceResult"></p>
+
+        <button type="button" onclick="exportToPDF()" lang="en">Export to PDF</button>
+        <button type="button" onclick="exportToPDF()" lang="te">PDF కి ఎగురు</button>
+    </div>
+        <button type="button" onclick="exportToPDF()" lang="en">Export to PDF</button>
+        <button type="button" onclick="exportToPDF()" lang="te">PDF కి ఎగురు</button>
+
+        <!-- New button for WhatsApp sharing -->
+        <button type="button" onclick="shareViaWhatsApp()" lang="en">Share via WhatsApp</button>
+        <button type="button" onclick="shareViaWhatsApp()" lang="te">WhatsApp ద్వారా షేర్ చేయండి</button>
+    </div>
+
+    <script>
+       function calculateBill() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const pricePerKg = parseFloat(document.getElementById('price').value);
+
+            const chickenCost = weight * pricePerKg;
+            const quantityCost = quantity * 10;
+
+            const totalBill = chickenCost + quantityCost;
+
+            document.getElementById('calculationResult').innerText = `Chicken Cost: ₹${chickenCost.toFixed(2)} | Quantity Cost: ₹${quantityCost.toFixed(2)} | Total Bill: ₹${totalBill.toFixed(2)}`;
+
+            document.getElementById('billDetails').style.display = 'block';
+        }
+
+        function calculateBalance() {
+            const totalBill = parseFloat(document.getElementById('calculationResult').innerText.split('Total Bill: ₹')[1]);
+            const paidAmount = parseFloat(document.getElementById('paidAmount').value);
+
+            const balance = totalBill - paidAmount;
+
+            document.getElementById('balanceResult').innerText = `Balance Amount: ₹${balance.toFixed(2)}`;
+        }
+
+        function exportToPDF() {
+            const restaurantName = 'Kori Prasad'; // Replace with the actual restaurant name
+            const currentTime = new Date().toLocaleString();
+
+            const element = document.getElementById('billDetails');
+
+            html2pdf(element, {
+                margin: 10,
+                filename: `${restaurantName}_${currentTime}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            });
+        }
+      </script>
+</script>
+        function shareViaWhatsApp() {
+            const restaurantName = 'Kori Prasad'; // Replace with the actual restaurant name
+            const currentTime = new Date().toLocaleString();
+
+            const pdfFileName = `${restaurantName}_${currentTime}.pdf`;
+
+            // Assuming the exported PDF is stored in the root directory
+            const pdfFilePath = `/${pdfFileName}`;
+
+            // Create a WhatsApp sharing link with the PDF file
+            const whatsappLink = `whatsapp://send?text=Check out the bill from ${restaurantName} - ${currentTime}: ${window.location.origin}${pdfFilePath}`;
+
+            // Open the link in a new window or redirect the current window
+            window.open(whatsappLink, '_blank');
+        }
+    </script>
+</body>
+</html>
