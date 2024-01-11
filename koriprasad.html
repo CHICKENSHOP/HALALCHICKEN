@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mubarak Chicken Center - Bill Generator</title>
+    <title>Kori Prasad - Bill Generator</title>
 
     <style>
         body {
@@ -53,6 +53,10 @@
         label, button {
             display: block;
             margin: 10px 0;
+        }
+
+        #billDetails {
+            margin-top: 20px;
         }
 
         ul {
@@ -141,13 +145,13 @@
                 '<p>New Total Balance: ₹' + newTotalBalance.toFixed(2) + '</p>';
 
             // Save bill details for download
-            saveBillDetails('Bill_Details_Mubarak_Chicken_Center.jpg', billDetails.innerHTML);
+            saveBillDetails('koriprasad.png', billDetails.innerHTML);
         }
 
         function saveBillDetails(filename, content) {
             // Create a dummy element to trigger download
             var element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('href', 'data:image/png;base64,' + btoa(content)); // Convert to base64 for PNG
             element.setAttribute('download', filename);
 
             element.style.display = 'none';
@@ -163,8 +167,8 @@
 
     <header>
         <h1 id="headerTitle">Mubarak Chicken Center</h1>
-        <h2 id="restaurantName" class="language-english">Restaurant Name: Mubarak Chicken Center</h2>
-        <h2 id="restaurantNameTelugu" class="language-telugu" style="display:none;">రెస్టారెంట్ పేరు: ముబారక్ చికెన్ సెంటర్</h2>
+        <h2 id="restaurantName" class="language-english">Kori Prasad</h2>
+        <h2 id="restaurantNameTelugu" class="language-telugu" style="display:none;">రెస్టారెంట్ పేరు: కొరి ప్రసాద్</h2>
     </header>
 
     <nav>
@@ -177,8 +181,8 @@
 
     <main>
         <div id="koriPrasadPageContent">
-            <h2 class="language-english">Mubarak Chicken Center Page Content in English</h2>
-            <h2 class="language-telugu" style="display:none;">తెలుగులో ముబారక్ చికెన్ సెంటర్ పేజీ కంటెంట్</h2>
+            <h2 class="language-english">Kori Prasad Page Content in English</h2>
+            <h2 class="language-telugu" style="display:none;">తెలుగులో కొరి ప్రసాద్ పేజీ కంటెంట్</h2>
 
             <form id="billForm">
                 <label for="date">Date:</label>
@@ -207,8 +211,7 @@
     </main>
 
     <footer>
-        <p class="language-english">&copy; 2024 Mubarak Chicken Center - Bill Generator. All rights reserved.</p>
-        <p class="language-telugu" style="display:none;">&copy; 2024 ముబారక్ చికెన్ సెంటర్ - బిల్ జనరేటర్. అన్ని హక్కులు ప్రకటించబడినవి.</p>
+        
     </footer>
 
 </body>
