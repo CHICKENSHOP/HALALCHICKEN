@@ -1,152 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f2f2f2;
-        color: #333;
-    }
-
-    header {
-        background-color: #4CAF50;
-        color: #fff;
-        padding: 15px;
-        text-align: center;
-    }
-
-    nav {
-        background-color: #333;
-        padding: 10px;
-        text-align: center;
-    }
-
-    nav label, select {
-        margin-right: 10px;
-        padding: 5px;
-        font-size: 14px;
-        color: #fff;
-    }
-
-    main {
-        margin: 20px;
-    }
-
-    #koriPrasadPageContent {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    form {
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    label, button {
-        display: block;
-        margin: 10px 0;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    ul li {
-        margin-bottom: 8px;
-    }
-
-    button {
-        background-color: #4CAF50;
-        color: #fff;
-        padding: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        border: none;
-        border-radius: 4px;
-    }
-
-    footer {
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 10px;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-    }
-
-    @media (max-width: 600px) {
-        header h1 {
-            font-size: 22px;
-        }
-
-        #restaurantName, #restaurantNameTelugu {
-            font-size: 16px;
-        }
-    }
-</style>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kori Prasad - Bill Generator</title>
-</head>
-<body>
 
-    <header>
-        <h1 id="headerTitle">Mubarak Chicken Centre</h1>
-        <h2 id="restaurantName" class="language-english">Restaurant Name: Kori Prasad</h2>
-        <h2 id="restaurantNameTelugu" class="language-telugu" style="display:none;">రెస్టారెంట్ పేరు: కొరి ప్రసాద్</h2>
-    </header>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
+        }
 
-    <nav>
-        <label for="languageDropdown">Select Language:</label>
-        <select id="languageDropdown" onchange="changeLanguage()">
-            <option value="english" selected>English</option>
-            <option value="telugu">తెలుగు</option>
-        </select>
-    </nav>
+        header {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
 
-    <main>
-        <div id="koriPrasadPageContent">
-            <h2 class="language-english">Kori Prasad Page Content in English</h2>
-            <h2 class="language-telugu" style="display:none;">తెలుగులో కొరి ప్రసాద్ పేజీ కంటెంట్</h2>
+        nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
 
-            <form id="billForm">
-                <label for="date">Date:</label>
-                <input type="date" id="date" name="date" required>
+        nav label, select {
+            margin-right: 10px;
+            padding: 5px;
+            font-size: 14px;
+            color: #fff;
+        }
 
-                <p class="language-english">Previous Input Values:</p>
-                <ul class="language-english">
-                    <li>Quantity of Chicken: <span id="quantity"></span></li>
-                    <li>Weight of Chicken (kg): <span id="weight"></span></li>
-                    <li>Price per Kg: <span id="pricePerKg"></span></li>
-                    <li>Previous Balance: ₹<span id="previousBalance"></span></li>
-                    <li>Paid Amount: ₹<span id="paidAmount"></span></li>
-                </ul>
+        main {
+            margin: 20px;
+        }
 
-                <p class="language-telugu" style="display:none;">మునిసిన ఇన్పుట్ వివరాలు:</p>
-                <ul class="language-telugu" style="display:none;">
-                    <li>చికెన్ సంఖ్య: <span id="quantityTelugu"></span></li>
-                    <li>చికెన్ భారం (కిలోలు): <span id="weightTelugu"></span></li>
-                    <li>కిలోలకు ధర: ₹<span id="pricePerKgTelugu"></span></li>
-                    <li>మునిసిన బ్యాలెన్స్: ₹<span id="previousBalanceTelugu"></span></li>
-                    <li>చెల్లించిన మొత్తం: ₹<span id="paidAmountTelugu"></span></li>
-                </ul>
+        #koriPrasadPageContent {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-                <button type="button" onclick="generateBill()">Generate Bill</button>
-            </form>
-        </div>
-    </main>
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
 
-    <footer>
-        <p class="language-english">&copy; 2024 Kori Prasad - Bill Generator. All rights reserved.</p>
-        <p class="language-telugu" style="display:none;">&copy; 2024 కొరి ప్రసాద్ - బిల్ జనరేటర్. అన్ని హక్కులు ప్రకటించబడినవి.</p>
-    </footer>
+        label, button {
+            display: block;
+            margin: 10px 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 22px;
+            }
+
+            #restaurantName, #restaurantNameTelugu {
+                font-size: 16px;
+            }
+        }
+    </style>
 
     <script>
         var currentLanguage = 'english';
@@ -183,16 +130,16 @@
         // Display values in the HTML
         document.getElementById('quantity').textContent = quantity;
         document.getElementById('weight').textContent = weight;
-        document.getElementById('pricePerKg').textContent = pricePerKg;
-        document.getElementById('previousBalance').textContent = previousBalance;
-        document.getElementById('paidAmount').textContent = paidAmount;
+        document.getElementById('pricePerKg').textContent = '₹' + pricePerKg;
+        document.getElementById('previousBalance').textContent = '₹' + previousBalance;
+        document.getElementById('paidAmount').textContent = '₹' + paidAmount;
 
         // Set Telugu content
         document.getElementById('quantityTelugu').textContent = quantity;
         document.getElementById('weightTelugu').textContent = weight;
-        document.getElementById('pricePerKgTelugu').textContent = pricePerKg;
-        document.getElementById('previousBalanceTelugu').textContent = previousBalance;
-        document.getElementById('paidAmountTelugu').textContent = paidAmount;
+        document.getElementById('pricePerKgTelugu').textContent = '₹' + pricePerKg;
+        document.getElementById('previousBalanceTelugu').textContent = '₹' + previousBalance;
+        document.getElementById('paidAmountTelugu').textContent = '₹' + paidAmount;
 
         // Function to generate the bill
         function generateBill() {
@@ -220,6 +167,59 @@
             // Redirect to the main page or perform any other actions as needed
         }
     </script>
+</head>
+<body>
+
+    <header>
+        <h1 id="headerTitle">Mubarak Chicken Centre</h1>
+        <h2 id="restaurantName" class="language-english">Restaurant Name: Kori Prasad</h2>
+        <h2 id="restaurantNameTelugu" class="language-telugu" style="display:none;">రెస్టారెంట్ పేరు: కొరి ప్రసాద్</h2>
+    </header>
+
+    <nav>
+        <label for="languageDropdown">Select Language:</label>
+        <select id="languageDropdown" onchange="changeLanguage()">
+            <option value="english" selected>English</option>
+            <option value="telugu">తెలుగు</option>
+        </select>
+    </nav>
+
+    <main>
+        <div id="koriPrasadPageContent">
+            <h2 class="language-english">Kori Prasad Page Content in English</h2>
+            <h2 class="language-telugu" style="display:none;">తెలుగులో కొరి ప్రసాద్ పేజీ కంటెంట్</h2>
+
+            <form id="billForm">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <p class="language-english">Previous Input Values:</p>
+                <ul class="language-english">
+                    <li>Quantity of Chicken: <span id="quantity"></span></li>
+                    <li>Weight of Chicken (kg): <span id="weight"></span></li>
+                    <li>Price per Kg: <span id="pricePerKg"></span></li>
+                    <li>Previous Balance: <span id="previousBalance"></span></li>
+                    <li>Paid Amount: <span id="paidAmount"></span></li>
+                </ul>
+
+                <p class="language-telugu" style="display:none;">మునిసిన ఇన్పుట్ వివరాలు:</p>
+                <ul class="language-telugu" style="display:none;">
+                    <li>చికెన్ సంఖ్య: <span id="quantityTelugu"></span></li>
+                    <li>చికెన్ భారం (కిలోలు): <span id="weightTelugu"></span></li>
+                    <li>కిలోలకు ధర: <span id="pricePerKgTelugu"></span></li>
+                    <li>మునిసిన బ్యాలెన్స్: <span id="previousBalanceTelugu"></span></li>
+                    <li>చెల్లించిన మొత్తం: <span id="paidAmountTelugu"></span></li>
+                </ul>
+
+                <button type="button" onclick="generateBill()">Generate Bill</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p class="language-english">&copy; 2024 Kori Prasad - Bill Generator. All rights reserved.</p>
+        <p class="language-telugu" style="display:none;">&copy; 2024 కొరి ప్రసాద్ - బిల్ జనరేటర్. అన్ని హక్కులు ప్రకటించబడినవి.</p>
+    </footer>
 
 </body>
 </html>
