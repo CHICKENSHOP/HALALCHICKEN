@@ -1,65 +1,151 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mubarak Chicken Center</title>
-    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
-    <script src="script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Bill Tracker with Firebase</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    select, input {
+      width: 200px;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    #item-list, #bill-details {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Mubarak Chicken Center</h1>
-    
-    <!-- Dropdown for restaurant selection -->
-    <label for="restaurantSelect">Select Restaurant:</label>
-    <select id="restaurantSelect">
-        <option value="kori">Kori</option>
-        <option value="sasi">Sasi</option>
-        <option value="kurtos">Kurtos</option>
-        <option value="bakewayKontamur">Bakeway Kontamur</option>
-        <option value="legendBar">Legend Bar</option>
-    </select><br>
 
-    <!-- Input for chicken prices -->
-    <label for="weightOfChicken">Weight of Chicken (kg):</label>
-    <input type="number" id="weightOfChicken">
-    <label for="quantityOfChicken">Quantity of Chicken:</label>
-    <input type="number" id="quantityOfChicken">
-    <label for="pricePerKg">Price per Kg:</label>
-    <input type="number" id="pricePerKg">
+  <h1>Customer Bill Tracker with Firebase</h1>
 
-    <!-- Input for other items (hidden by default) -->
-    <div id="otherItems" style="display: none;">
-        <label for="item1Price">Item 1 Price:</label>
-        <input type="number" id="item1Price">
-        <label for="item1Qty">Item 1 Quantity:</label>
-        <input type="number" id="item1Qty">
+  <label for="customer">Select Customer:</label>
+  <select id="customer" onchange="updateItemList()"></select>
 
-        <!-- Repeat similar input fields for other items as needed -->
-        <!-- For example:
-        <label for="item2Price">Item 2 Price:</label>
-        <input type="number" id="item2Price">
-        <label for="item2Qty">Item 2 Quantity:</label>
-        <input type="number" id="item2Qty">
-        -->
-    </div>
+  <div id="bill-details">
+    <h2>Bill Details for <span id="selected-customer">Kori Prasad</span>:</h2>
+    <label for="bill-amount">Bill Amount:</label>
+    <input type="number" id="bill-amount" disabled>
 
-    <!-- Input for previous balance -->
-    <label for="previousBalance">Previous Balance:</label>
-    <input type="number" id="previousBalance"><br>
+    <label for="previous-balance">Previous Balance:</label>
+    <input type="number" id="previous-balance" disabled>
 
-    <!-- Button to calculate and display results -->
-    <button onclick="calculateTotalBill()">Calculate Total Bill</button>
+    <label for="amount-paid">Amount Paid:</label>
+    <input type="number" id="amount-paid" oninput="updateRemainingBalance()">
 
-    <!-- Display results -->
-    <div id="result"></div>
+    <label for="remaining-balance">Remaining Balance:</label>
+    <input type="number" id="remaining-balance" disabled>
 
-    <!-- Button to export as Image -->
-    <button onclick="exportToImage()">Export as Image</button>
+    <label for="export-button">Export to JPG:</label>
+    <button id="export-button" onclick="exportToJpg()">Export</button>
+  </div>
 
-    <!-- Hidden input field to store details for PDF export -->
-    <textarea id="exportDetails" style="display: none;"></textarea>
+  <div id="item-list">
+    <h2>Available Items for <span id="selected-customer-items">Kori Prasad</span>:</h2>
+    <ul id="items"></ul>
+  </div>
+
+  <!-- Add Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js"></script>
+
+  <script>
+    // Replace with your Firebase config
+    var firebaseConfig = {
+      apiKey:"AIzaSyA6tSdZQ6d8-5hgeTpYEwvNbW2cqC5Z0aQ" ,
+      authDomain: "mubarak-chicken.firebaseapp.com",
+      projectId: "mubarak-chicken",
+      storageBucket: "mubarak-chicken.appspot.com",
+      messagingSenderId: "160226866721",
+      appId: "1:160226866721:web:eb9ff0193554e21739d560"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Get a reference to the database
+    var database = firebase.database();
+
+    // Get the customer dropdown element
+    var customerDropdown = document.getElementById("customer");
+
+    // Populate the customer dropdown with data from Firebase
+    database.ref("customers").once("value")
+      .then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          var customerKey = childSnapshot.key;
+          var customerName = childSnapshot.val().name;
+          var option = document.createElement("option");
+          option.value = customerKey;
+          option.text = customerName;
+          customerDropdown.add(option);
+        });
+
+        // Initial update on page load
+        updateItemList();
+      })
+      .catch(function(error) {
+        console.error("Error loading customers: " + error);
+      });
+
+    function updateItemList() {
+      var selectedCustomer = customerDropdown.value;
+      document.getElementById("selected-customer").textContent = customerDropdown.options[customerDropdown.selectedIndex].text;
+
+      // Get bill details for the selected customer from Firebase
+      database.ref("bills/" + selectedCustomer).once("value")
+        .then(function(snapshot) {
+          var billDetails = snapshot.val();
+
+          // Update the input fields
+          document.getElementById("bill-amount").value = billDetails.billAmount;
+          document.getElementById("previous-balance").value = billDetails.previousBalance;
+          document.getElementById("amount-paid").value = "";
+          document.getElementById("remaining-balance").value = billDetails.remainingBalance;
+          
+          // Update the item list
+          var itemList = document.getElementById("items");
+          itemList.innerHTML = "";
+
+          for (var i = 0; i < billDetails.items.length; i++) {
+            var listItem = document.createElement("li");
+            listItem.textContent = billDetails.items[i];
+            itemList.appendChild(listItem);
+          }
+
+          // Update the displayed customer name for items
+          document.getElementById("selected-customer-items").textContent = customerDropdown.options[customerDropdown.selectedIndex].text;
+        })
+        .catch(function(error) {
+          console.error("Error loading bill details: " + error);
+        });
+    }
+
+    function updateRemainingBalance() {
+      var billAmount = parseFloat(document.getElementById("bill-amount").value) || 0;
+      var previousBalance = parseFloat(document.getElementById("previous-balance").value) || 0;
+      var amountPaid = parseFloat(document.getElementById("amount-paid").value) || 0;
+
+      // Calculate remaining balance
+      var remainingBalance = billAmount + previousBalance - amountPaid;
+
+      // Update the remaining balance field
+      document.getElementById("remaining-balance").value = remainingBalance.toFixed(2);
+    }
+
+    function exportToJpg() {
+      // Logic to export bill details to JPG (Not implemented in this example)
+      alert("Export to JPG is not implemented in this example.");
+    }
+  </script>
+
 </body>
 </html>
