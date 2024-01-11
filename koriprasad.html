@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mubarak Chicken Center - Bill Generator</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav label, select {
+            margin-right: 10px;
+            padding: 5px;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        #koriPrasadPageContent {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label, button {
+            display: block;
+            margin: 10px 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+
+    <script>
+        var currentLanguage = 'english';
+
+        function changeLanguage() {
+            currentLanguage = document.getElementById('languageDropdown').value;
+            toggleLanguage();
+        }
+
+        function toggleLanguage() {
+            var elementsToToggle = document.querySelectorAll('.language-' + currentLanguage);
+            elementsToToggle.forEach(element => {
+                element.style.display = 'block';
+            });
+
+            var elementsToHide = document.querySelectorAll('.language-' + (currentLanguage === 'english' ? 'telugu' : 'english'));
+            elementsToHide.forEach(element => {
+                element.style.display = 'none';
+            });
+        }
+
+        function calculateBill() {
+            var date = document.getElementById('date').value;
+
+            // Get user input values
+            var quantity = document.getElementById('quantity').value;
+            var weight = document.getElementById('weight').value;
+            var pricePerKg = document.getElementById('pricePerKg').value;
+            var previousBalance = document.getElementById('previousBalance').value;
+            var paidAmount = document.getElementById('paidAmount').value;
+
+            // Convert string values to numbers for calculations
+            var quantityNum = parseFloat(quantity);
+            var weightNum = parseFloat(weight);
+            var pricePerKgNum = parseFloat(pricePerKg);
+            var previousBalanceNum = parseFloat(previousBalance);
+            var paidAmountNum = parseFloat(paidAmount);
+
+            // Calculate the bill amount
+            var billAmount = (weightNum * pricePerKgNum * quantityNum) + (paidAmountNum * 10);
+
+            // Calculate the new total balance
+            var newTotalBalance = previousBalanceNum + paidAmountNum;
+
+            // Display the bill details on the webpage
+            var billDetails = document.getElementById('billDetails');
+            billDetails.innerHTML = '<h3>Bill Details:</h3>' +
+                '<p>Date: ' + date + '</p>' +
+                '<p>Quantity of Chicken: ' + quantityNum + '</p>' +
+                '<p>Weight of Chicken (kg): ' + weightNum + '</p>' +
+                '<p>Price per Kg: ₹' + pricePerKgNum.toFixed(2) + '</p>' +
+                '<p>Previous Balance: ₹' + previousBalanceNum.toFixed(2) + '</p>' +
+                '<p>Paid Amount: ₹' + paidAmountNum.toFixed(2) + '</p>' +
+                '<p>Bill Amount: ₹' + billAmount.toFixed(2) + '</p>' +
+                '<p>New Total Balance: ₹' + newTotalBalance.toFixed(2) + '</p>';
+
+            // Save bill details for download
+            saveBillDetails('Bill_Details_Mubarak_Chicken_Center.jpg', billDetails.innerHTML);
+        }
+
+        function saveBillDetails(filename, content) {
+            // Create a dummy element to trigger download
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1 id="headerTitle">Mubarak Chicken Center</h1>
+        <h2 id="restaurantName" class="language-english">Restaurant Name: Mubarak Chicken Center</h2>
+        <h2 id="restaurantNameTelugu" class="language-telugu" style="display:none;">రెస్టారెంట్ పేరు: ముబారక్ చికెన్ సెంటర్</h2>
+    </header>
+
+    <nav>
+        <label for="languageDropdown">Select Language:</label>
+        <select id="languageDropdown" onchange="changeLanguage()">
+            <option value="english" selected>English</option>
+            <option value="telugu">తెలుగు</option>
+        </select>
+    </nav>
+
+    <main>
+        <div id="koriPrasadPageContent">
+            <h2 class="language-english">Mubarak Chicken Center Page Content in English</h2>
+            <h2 class="language-telugu" style="display:none;">తెలుగులో ముబారక్ చికెన్ సెంటర్ పేజీ కంటెంట్</h2>
+
+            <form id="billForm">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="quantity">Quantity of Chicken:</label>
+                <input type="number" id="quantity" name="quantity" step="1" required>
+
+                <label for="weight">Weight of Chicken (kg):</label>
+                <input type="number" id="weight" name="weight" step="0.01" required>
+
+                <label for="pricePerKg">Price per Kg:</label>
+                <input type="number" id="pricePerKg" name="pricePerKg" step="0.01" required>
+
+                <label for="previousBalance">Previous Balance:</label>
+                <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
+
+                <label for="paidAmount">Paid Amount:</label>
+                <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
+
+                <button type="button" onclick="calculateBill()">Calculate Bill</button>
+            </form>
+
+            <div id="billDetails"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p class="language-english">&copy; 2024 Mubarak Chicken Center - Bill Generator. All rights reserved.</p>
+        <p class="language-telugu" style="display:none;">&copy; 2024 ముబారక్ చికెన్ సెంటర్ - బిల్ జనరేటర్. అన్ని హక్కులు ప్రకటించబడినవి.</p>
+    </footer>
+
+</body>
+</html>
