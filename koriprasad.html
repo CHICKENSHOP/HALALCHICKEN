@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kori Prasad - Bill Generator</title>
+    <title>Mubarak Chicken Center - Bill Generator</title>
 
     <style>
         body {
@@ -62,7 +62,7 @@
             margin-top: 20px;
         }
 
-        #exportButton {
+        #downloadButton {
             background-color: #4CAF50;
             color: #fff;
             padding: 10px;
@@ -80,8 +80,7 @@
 
     <script>
         function initializePage() {
-            var languageSelect = prompt("Select Language: Enter 'english' or 'telugu'");
-            setLanguage(languageSelect);
+            setLanguage('english'); // Default language is English
         }
 
         function setLanguage(selectedLanguage) {
@@ -128,28 +127,17 @@
                 '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹' + newTotalBalance.toFixed(2) + '</p>';
 
             // Save bill details for download
-            saveBillDetails('mubarak_chicken_center.png', billDetails.innerHTML);
-        }
-
-        function saveBillDetails(filename, content) {
-            // Create a dummy element to trigger download
-            var element = document.createElement('a');
-            element.setAttribute('href', 'data:image/png;base64,' + btoa(content)); // Convert to base64 for PNG
-            element.setAttribute('download', filename);
-
-            element.style.display = 'none';
-            document.body.appendChild(element);
-
-            element.click();
-
-            document.body.removeChild(element);
+            var downloadButton = document.getElementById('downloadButton');
+            downloadButton.setAttribute('download', 'mubarak_chicken_center_bill.txt');
+            downloadButton.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(billDetails.innerText));
+            downloadButton.style.display = 'block'; // Display the download button
         }
     </script>
 </head>
 <body onload="initializePage()">
 
     <header>
-        <h1 id="headerTitle">ముబారక్ చికెన్ సెంటర్</h1>
+        <h1 id="headerTitle">Mubarak Chicken Center</h1>
     </header>
 
     <form id="billForm">
@@ -176,9 +164,7 @@
 
     <div id="billDetails" class="language-telugu"></div>
 
-    <button id="exportButton" onclick="saveBillDetails('mubarak_chicken_center.png', document.getElementById('billDetails').innerHTML)">
-        Export Bill as Image (PNG) (బిల్ చిత్రంగా ఎగుమతి)
-    </button>
+    <a id="downloadButton" style="display: none;">Download Bill (బిల్ డౌన్లోడ్)</a>
 
 </body>
 </html>
