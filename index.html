@@ -146,6 +146,27 @@
       alert("Export to JPG is not implemented in this example.");
     }
   </script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<button id="export-button" onclick="exportToJpg()">Export</button>
+<script>
+function exportToJpg() {
+    // Get the bill details container element
+    var billDetailsContainer = document.getElementById("bill-details");
+
+    // Use html2canvas to capture the bill details container as an image
+    html2canvas(billDetailsContainer).then(function(canvas) {
+        // Convert the canvas to a data URL
+        var dataUrl = canvas.toDataURL("image/jpeg");
+
+        // Create a link element and trigger a download
+        var link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = "bill.jpg";
+        link.click();
+    });
+}
+</script>
+
 
 </body>
 </html>
