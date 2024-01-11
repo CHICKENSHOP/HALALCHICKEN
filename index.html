@@ -21,6 +21,14 @@
     #item-list, #bill-details {
       margin-top: 20px;
     }
+    #export-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -57,10 +65,13 @@
   <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js"></script>
 
+  <!-- Add html2canvas library -->
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
   <script>
     // Replace with your Firebase config
     var firebaseConfig = {
-      apiKey:"AIzaSyA6tSdZQ6d8-5hgeTpYEwvNbW2cqC5Z0aQ" ,
+      apiKey: "AIzaSyA6tSdZQ6d8-5hgeTpYEwvNbW2cqC5Z0aQ",
       authDomain: "mubarak-chicken.firebaseapp.com",
       projectId: "mubarak-chicken",
       storageBucket: "mubarak-chicken.appspot.com",
@@ -142,31 +153,22 @@
     }
 
     function exportToJpg() {
-      // Logic to export bill details to JPG (Not implemented in this example)
-      alert("Export to JPG is not implemented in this example.");
+      // Get the bill details container element
+      var billDetailsContainer = document.getElementById("bill-details");
+
+      // Use html2canvas to capture the bill details container as an image
+      html2canvas(billDetailsContainer).then(function(canvas) {
+          // Convert the canvas to a data URL
+          var dataUrl = canvas.toDataURL("image/jpeg");
+
+          // Create a link element and trigger a download
+          var link = document.createElement("a");
+          link.href = dataUrl;
+          link.download = "bill.jpg";
+          link.click();
+      });
     }
   </script>
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<button id="export-button" onclick="exportToJpg()">Export</button>
-<script>
-function exportToJpg() {
-    // Get the bill details container element
-    var billDetailsContainer = document.getElementById("bill-details");
-
-    // Use html2canvas to capture the bill details container as an image
-    html2canvas(billDetailsContainer).then(function(canvas) {
-        // Convert the canvas to a data URL
-        var dataUrl = canvas.toDataURL("image/jpeg");
-
-        // Create a link element and trigger a download
-        var link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = "bill.jpg";
-        link.click();
-    });
-}
-</script>
-
 
 </body>
 </html>
