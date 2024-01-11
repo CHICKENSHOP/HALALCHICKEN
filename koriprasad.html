@@ -1,122 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    header {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+    }
+
+    nav {
+        background-color: #333;
+        padding: 10px;
+        text-align: center;
+    }
+
+    nav label, select {
+        margin-right: 10px;
+        padding: 5px;
+        font-size: 14px;
+        color: #fff;
+    }
+
+    main {
+        margin: 20px;
+    }
+
+    #koriPrasadPageContent {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    label, button {
+        display: block;
+        margin: 10px 0;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    ul li {
+        margin-bottom: 8px;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+    }
+
+    footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    @media (max-width: 600px) {
+        header h1 {
+            font-size: 22px;
+        }
+
+        #restaurantName, #restaurantNameTelugu {
+            font-size: 16px;
+        }
+    }
+</style>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mubarak Chicken Center - Bill Generator</title>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <title>Kori Prasad - Bill Generator</title>
 </head>
 <body>
 
     <header>
-        <h1 id="headerTitle">Mubarak Chicken Center - Bill Generator</h1>
+        <h1 id="headerTitle">Mubarak Chicken Centre</h1>
+        <h2 id="restaurantName" class="language-english">Restaurant Name: Kori Prasad</h2>
+        <h2 id="restaurantNameTelugu" class="language-telugu" style="display:none;">రెస్టారెంట్ పేరు: కొరి ప్రసాద్</h2>
     </header>
 
+    <nav>
+        <label for="languageDropdown">Select Language:</label>
+        <select id="languageDropdown" onchange="changeLanguage()">
+            <option value="english" selected>English</option>
+            <option value="telugu">తెలుగు</option>
+        </select>
+    </nav>
+
     <main>
-        <form id="billForm">
-            <label for="chickenWeight" class="language-english">Chicken Weight (in kg):</label>
-            <label for="chickenWeight" class="language-telugu" style="display:none;">చికెన్ బరిగి (కిలోలలో):</label>
-            <input type="number" id="chickenWeight" required>
+        <div id="koriPrasadPageContent">
+            <h2 class="language-english">Kori Prasad Page Content in English</h2>
+            <h2 class="language-telugu" style="display:none;">తెలుగులో కొరి ప్రసాద్ పేజీ కంటెంట్</h2>
 
-            <label for="pricePerKg" class="language-english">Price per kg of Chicken:</label>
-            <label for="pricePerKg" class="language-telugu" style="display:none;">చికెన్ కిలో వారు:</label>
-            <input type="number" id="pricePerKg" required>
+            <form id="billForm">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
 
-            <label for="quantity" class="language-english">Quantity (in units):</label>
-            <label for="quantity" class="language-telugu" style="display:none;">మొత్తం (యూనిట్లలో):</label>
-            <input type="number" id="quantity" required>
+                <p class="language-english">Previous Input Values:</p>
+                <ul class="language-english">
+                    <li>Quantity of Chicken: <span id="quantity"></span></li>
+                    <li>Weight of Chicken (kg): <span id="weight"></span></li>
+                    <li>Price per Kg: <span id="pricePerKg"></span></li>
+                    <li>Previous Balance: ₹<span id="previousBalance"></span></li>
+                    <li>Paid Amount: ₹<span id="paidAmount"></span></li>
+                </ul>
 
-            <button type="button" onclick="generateBill()" class="language-english">Generate Bill</button>
-            <button type="button" onclick="generateBill()" class="language-telugu" style="display:none;">బిల్‌ను సృష్టించండి</button>
-        </form>
+                <p class="language-telugu" style="display:none;">మునిసిన ఇన్పుట్ వివరాలు:</p>
+                <ul class="language-telugu" style="display:none;">
+                    <li>చికెన్ సంఖ్య: <span id="quantityTelugu"></span></li>
+                    <li>చికెన్ భారం (కిలోలు): <span id="weightTelugu"></span></li>
+                    <li>కిలోలకు ధర: ₹<span id="pricePerKgTelugu"></span></li>
+                    <li>మునిసిన బ్యాలెన్స్: ₹<span id="previousBalanceTelugu"></span></li>
+                    <li>చెల్లించిన మొత్తం: ₹<span id="paidAmountTelugu"></span></li>
+                </ul>
 
-        <div id="billResult" style="display:none;">
-            <h2 class="language-english">Bill Details</h2>
-            <h2 class="language-telugu" style="display:none;">బిల్ వివరాలు</h2>
-            <p id="totalAmount" class="language-english">Total Amount: $0</p>
-            <p id="totalAmount" class="language-telugu" style="display:none;">మొత్తం: $0</p>
-
-            <label for="previousBalance" class="language-english">Previous Balance:</label>
-            <label for="previousBalance" class="language-telugu" style="display:none;">మునుపటి బ్యాలెన్స్:</label>
-            <input type="number" id="previousBalance" required>
-
-            <label for="paidAmount" class="language-english">Paid Amount:</label>
-            <label for="paidAmount" class="language-telugu" style="display:none;">చెల్లింపు మొత్తం:</label>
-            <input type="number" id="paidAmount" required>
-
-            <button type="button" onclick="calculateBalance()" class="language-english">Calculate Balance</button>
-            <button type="button" onclick="calculateBalance()" class="language-telugu" style="display:none;">బ్యాలెన్స్ కలిగించండి</button>
-
-            <p id="balanceResult" style="display:none;" class="language-english">Total Balance: $0</p>
-            <p id="balanceResult" style="display:none;" class="language-telugu">మొత్తం బ్యాలెన్స్: $0</p>
-            <p id="dateTime" class="language-english"></p>
-            <p id="dateTime" class="language-telugu" style="display:none;"></p>
-
-            <button type="button" onclick="generateImage()" class="language-english">Generate Image</button>
-            <button type="button" onclick="generateImage()" class="language-telugu" style="display:none;">చిత్రాన్ని సృష్టించండి</button>
-        </div>
-        
-        <div id="imageContainer" style="display:none;">
-            <h2 class="language-english">Generated Image</h2>
-            <h2 class="language-telugu" style="display:none;">సృష్టించిన చిత్రం</h2>
-            <img id="generatedImage" alt="Generated Bill Image">
-            <a id="downloadLink" download="restaurant_bill.png" class="language-english">Download Image</a>
-            <a id="downloadLink" download="restaurant_bill.png" class="language-telugu" style="display:none;">చిత్రాన్ని డౌన్‌లోడ్ చేయండి</a>
+                <button type="button" onclick="generateBill()">Generate Bill</button>
+            </form>
         </div>
     </main>
 
     <footer>
-        <p class="language-english">&copy; 2024 Mubarak Chicken Center - Bill Generator. All rights reserved.</p>
-        <p class="language-telugu" style="display:none;">&copy; 2024 ముబారక్ చికెన్ సెంటర్ - బిల్ జనరేటర్. అన్ని హక్కులు ప్రకటించబడినవి.</p>
+        <p class="language-english">&copy; 2024 Kori Prasad - Bill Generator. All rights reserved.</p>
+        <p class="language-telugu" style="display:none;">&copy; 2024 కొరి ప్రసాద్ - బిల్ జనరేటర్. అన్ని హక్కులు ప్రకటించబడినవి.</p>
     </footer>
 
     <script>
         var currentLanguage = 'english';
 
+        function changeLanguage() {
+            currentLanguage = document.getElementById('languageDropdown').value;
+            toggleLanguage();
+        }
+
         function toggleLanguage() {
             var elementsToToggle = document.querySelectorAll('.language-' + currentLanguage);
             elementsToToggle.forEach(element => {
-                element.style.display = 'none';
-            });
-
-            currentLanguage = (currentLanguage === 'english') ? 'telugu' : 'english';
-
-            var elementsToShow = document.querySelectorAll('.language-' + currentLanguage);
-            elementsToShow.forEach(element => {
                 element.style.display = 'block';
             });
-        }
 
-        function generateBill() {
-            var chickenWeight = parseFloat(document.getElementById('chickenWeight').value) || 0;
-            var pricePerKg = parseFloat(document.getElementById('pricePerKg').value) || 0;
-            var quantity = parseFloat(document.getElementById('quantity').value) || 0;
-
-            var totalAmount = (chickenWeight * pricePerKg) + (quantity * 10);
-
-            document.getElementById('totalAmount').textContent = 'Total Amount: $' + totalAmount.toFixed(2);
-            document.getElementById('billResult').style.display = 'block';
-        }
-
-        function calculateBalance() {
-            var previousBalance = parseFloat(document.getElementById('previousBalance').value) || 0;
-            var paidAmount = parseFloat(document.getElementById('paidAmount').value) || 0;
-
-            var totalBalance = previousBalance - paidAmount;
-
-            document.getElementById('balanceResult').textContent = 'Total Balance: $' + totalBalance.toFixed(2);
-            document.getElementById('balanceResult').style.display = 'block';
-
-            var dateTime = new Date();
-            document.getElementById('dateTime').textContent = 'Date and Time: ' + dateTime.toLocaleString();
-        }
-
-        function generateImage() {
-            html2canvas(document.getElementById('billResult')).then(canvas => {
-                document.getElementById('imageContainer').style.display = 'block';
-                document.getElementById('generatedImage').src = canvas.toDataURL();
-                document.getElementById('downloadLink').href = canvas.toDataURL();
+            var elementsToHide = document.querySelectorAll('.language-' + (currentLanguage === 'english' ? 'telugu' : 'english'));
+            elementsToHide.forEach(element => {
+                element.style.display = 'none';
             });
+        }
+
+        function getURLParameter(name) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Retrieve values from URL parameters
+        var quantity = getURLParameter('quantity');
+        var weight = getURLParameter('weight');
+        var pricePerKg = getURLParameter('pricePerKg');
+        var previousBalance = getURLParameter('previousBalance');
+        var paidAmount = getURLParameter('paidAmount');
+
+        // Display values in the HTML
+        document.getElementById('quantity').textContent = quantity;
+        document.getElementById('weight').textContent = weight;
+        document.getElementById('pricePerKg').textContent = pricePerKg;
+        document.getElementById('previousBalance').textContent = previousBalance;
+        document.getElementById('paidAmount').textContent = paidAmount;
+
+        // Set Telugu content
+        document.getElementById('quantityTelugu').textContent = quantity;
+        document.getElementById('weightTelugu').textContent = weight;
+        document.getElementById('pricePerKgTelugu').textContent = pricePerKg;
+        document.getElementById('previousBalanceTelugu').textContent = previousBalance;
+        document.getElementById('paidAmountTelugu').textContent = paidAmount;
+
+        // Function to generate the bill
+        function generateBill() {
+            var date = document.getElementById('date').value;
+
+            // Convert string values to numbers for calculations
+            var quantityNum = parseFloat(quantity);
+            var weightNum = parseFloat(weight);
+            var pricePerKgNum = parseFloat(pricePerKg);
+            var previousBalanceNum = parseFloat(previousBalance);
+            var paidAmountNum = parseFloat(paidAmount);
+
+            // Calculate the bill amount
+            var billAmount = (weightNum * pricePerKgNum * quantityNum) + (paidAmountNum * 10);
+
+            // Calculate the new total balance
+            var newTotalBalance = previousBalanceNum + billAmount;
+
+            // Display the bill details
+            alert('Bill Details:\n' +
+                'Date: ' + date + '\n' +
+                'Bill Amount: ₹' + billAmount.toFixed(2) + '\n' +
+                'New Total Balance: ₹' + newTotalBalance.toFixed(2));
+
+            // Redirect to the main page or perform any other actions as needed
         }
     </script>
 
