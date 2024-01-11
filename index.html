@@ -3,198 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kori Prasad - Bill Generator</title>
-
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-            color: #333;
-        }
-
-        header {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 15px;
-            text-align: center;
-        }
-
-        nav {
-            background-color: #333;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav label, select {
-            margin-right: 10px;
-            padding: 5px;
-            font-size: 14px;
-            color: #fff;
-        }
-
-        main {
-            margin: 20px;
-        }
-
-        #koriPrasadPageContent {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        label, button {
-            display: block;
-            margin: 10px 0;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        ul li {
-            margin-bottom: 8px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 22px;
-            }
-
-            #restaurantName, #restaurantNameTelugu {
-                font-size: 16px;
-            }
-        }
-    </style>
-
-    <script>
-        var currentLanguage = 'english';
-
-        function changeLanguage() {
-            currentLanguage = document.getElementById('languageDropdown').value;
-            toggleLanguage();
-        }
-
-        function toggleLanguage() {
-            var elementsToToggle = document.querySelectorAll('.language-' + currentLanguage);
-            elementsToToggle.forEach(element => {
-                element.style.display = 'block';
-            });
-
-            var elementsToHide = document.querySelectorAll('.language-' + (currentLanguage === 'english' ? 'telugu' : 'english'));
-            elementsToHide.forEach(element => {
-                element.style.display = 'none';
-            });
-        }
-
-        function generateBill() {
-            var date = document.getElementById('date').value;
-
-            // Get user input values
-            var quantity = document.getElementById('quantity').value;
-            var weight = document.getElementById('weight').value;
-            var pricePerKg = document.getElementById('pricePerKg').value;
-            var previousBalance = document.getElementById('previousBalance').value;
-            var paidAmount = document.getElementById('paidAmount').value;
-
-            // Convert string values to numbers for calculations
-            var quantityNum = parseFloat(quantity);
-            var weightNum = parseFloat(weight);
-            var pricePerKgNum = parseFloat(pricePerKg);
-            var previousBalanceNum = parseFloat(previousBalance);
-            var paidAmountNum = parseFloat(paidAmount);
-
-            // Calculate the bill amount
-            var billAmount = (weightNum * pricePerKgNum * quantityNum) + (paidAmountNum * 10);
-
-            // Calculate the new total balance
-            var newTotalBalance = previousBalanceNum + billAmount;
-
-            // Display the bill details
-            alert('Bill Details:\n' +
-                'Date: ' + date + '\n' +
-                'Bill Amount: ₹' + billAmount.toFixed(2) + '\n' +
-                'New Total Balance: ₹' + newTotalBalance.toFixed(2));
-        }
-    </script>
+    <title>Restaurant Selection</title>
 </head>
 <body>
 
-    <header>
-        <h1 id="headerTitle">Mubarak Chicken Centre</h1>
-        <h2 id="restaurantName" class="language-english">Restaurant Name: Kori Prasad</h2>
-        <h2 id="restaurantNameTelugu" class="language-telugu" style="display:none;">రెస్టారెంట్ పేరు: కొరి ప్రసాద్</h2>
-    </header>
+    <h1>Select a Restaurant:</h1>
 
-    <nav>
-        <label for="languageDropdown">Select Language:</label>
-        <select id="languageDropdown" onchange="changeLanguage()">
-            <option value="english" selected>English</option>
-            <option value="telugu">తెలుగు</option>
+    <form id="restaurantForm" action="">
+
+        <label for="restaurantDropdown">Choose a Restaurant:</label>
+        <select id="restaurantDropdown" onchange="redirectToRestaurant()">
+            <option value="" disabled selected>Select a Restaurant</option>
+            <option value="mubarak">Mubarak Chicken Center</option>
+            <option value="koriprasad">Kori Prasad</option>
+            <!-- Add more options for other restaurants as needed -->
         </select>
-    </nav>
 
-    <main>
-        <div id="koriPrasadPageContent">
-            <h2 class="language-english">Kori Prasad Page Content in English</h2>
-            <h2 class="language-telugu" style="display:none;">తెలుగులో కొరి ప్రసాద్ పేజీ కంటెంట్</h2>
+    </form>
 
-            <form id="billForm">
-                <label for="date">Date:</label>
-                <input type="date" id="date" name="date" required>
+    <script>
+        function redirectToRestaurant() {
+            var selectedRestaurant = document.getElementById('restaurantDropdown').value;
 
-                <label for="quantity">Quantity of Chicken:</label>
-                <input type="number" id="quantity" name="quantity" step="1" required>
-
-                <label for="weight">Weight of Chicken (kg):</label>
-                <input type="number" id="weight" name="weight" step="0.01" required>
-
-                <label for="pricePerKg">Price per Kg:</label>
-                <input type="number" id="pricePerKg" name="pricePerKg" step="0.01" required>
-
-                <label for="previousBalance">Previous Balance:</label>
-                <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
-
-                <label for="paidAmount">Paid Amount:</label>
-                <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
-
-                <button type="button" onclick="generateBill()">Generate Bill</button>
-            </form>
-        </div>
-    </main>
-
-    <footer>
-        <p class="language-english">&copy; 2024 Kori Prasad - Bill Generator. All rights reserved.</p>
-        <p class="language-telugu" style="display:none;">&copy; 2024 కొరి ప్రసాద్ - బిల్ జనరేటర్. అన్ని హక్కులు ప్రకటించబడినవి.</p>
-    </footer>
+            if (selectedRestaurant) {
+                // Redirect to the respective restaurant page
+                window.location.href = selectedRestaurant + ".html";
+            }
+        }
+    </script>
 
 </body>
 </html>
