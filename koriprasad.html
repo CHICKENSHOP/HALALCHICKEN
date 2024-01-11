@@ -115,35 +115,15 @@
             });
         }
 
-        function getURLParameter(name) {
-            var urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
-
-        // Retrieve values from URL parameters
-        var quantity = getURLParameter('quantity');
-        var weight = getURLParameter('weight');
-        var pricePerKg = getURLParameter('pricePerKg');
-        var previousBalance = getURLParameter('previousBalance');
-        var paidAmount = getURLParameter('paidAmount');
-
-        // Display values in the HTML
-        document.getElementById('quantity').textContent = quantity;
-        document.getElementById('weight').textContent = weight;
-        document.getElementById('pricePerKg').textContent = '₹' + pricePerKg;
-        document.getElementById('previousBalance').textContent = '₹' + previousBalance;
-        document.getElementById('paidAmount').textContent = '₹' + paidAmount;
-
-        // Set Telugu content
-        document.getElementById('quantityTelugu').textContent = quantity;
-        document.getElementById('weightTelugu').textContent = weight;
-        document.getElementById('pricePerKgTelugu').textContent = '₹' + pricePerKg;
-        document.getElementById('previousBalanceTelugu').textContent = '₹' + previousBalance;
-        document.getElementById('paidAmountTelugu').textContent = '₹' + paidAmount;
-
-        // Function to generate the bill
         function generateBill() {
             var date = document.getElementById('date').value;
+
+            // Get user input values
+            var quantity = document.getElementById('quantity').value;
+            var weight = document.getElementById('weight').value;
+            var pricePerKg = document.getElementById('pricePerKg').value;
+            var previousBalance = document.getElementById('previousBalance').value;
+            var paidAmount = document.getElementById('paidAmount').value;
 
             // Convert string values to numbers for calculations
             var quantityNum = parseFloat(quantity);
@@ -163,8 +143,6 @@
                 'Date: ' + date + '\n' +
                 'Bill Amount: ₹' + billAmount.toFixed(2) + '\n' +
                 'New Total Balance: ₹' + newTotalBalance.toFixed(2));
-
-            // Redirect to the main page or perform any other actions as needed
         }
     </script>
 </head>
@@ -193,23 +171,20 @@
                 <label for="date">Date:</label>
                 <input type="date" id="date" name="date" required>
 
-                <p class="language-english">Previous Input Values:</p>
-                <ul class="language-english">
-                    <li>Quantity of Chicken: <span id="quantity"></span></li>
-                    <li>Weight of Chicken (kg): <span id="weight"></span></li>
-                    <li>Price per Kg: <span id="pricePerKg"></span></li>
-                    <li>Previous Balance: <span id="previousBalance"></span></li>
-                    <li>Paid Amount: <span id="paidAmount"></span></li>
-                </ul>
+                <label for="quantity">Quantity of Chicken:</label>
+                <input type="number" id="quantity" name="quantity" step="1" required>
 
-                <p class="language-telugu" style="display:none;">మునిసిన ఇన్పుట్ వివరాలు:</p>
-                <ul class="language-telugu" style="display:none;">
-                    <li>చికెన్ సంఖ్య: <span id="quantityTelugu"></span></li>
-                    <li>చికెన్ భారం (కిలోలు): <span id="weightTelugu"></span></li>
-                    <li>కిలోలకు ధర: <span id="pricePerKgTelugu"></span></li>
-                    <li>మునిసిన బ్యాలెన్స్: <span id="previousBalanceTelugu"></span></li>
-                    <li>చెల్లించిన మొత్తం: <span id="paidAmountTelugu"></span></li>
-                </ul>
+                <label for="weight">Weight of Chicken (kg):</label>
+                <input type="number" id="weight" name="weight" step="0.01" required>
+
+                <label for="pricePerKg">Price per Kg:</label>
+                <input type="number" id="pricePerKg" name="pricePerKg" step="0.01" required>
+
+                <label for="previousBalance">Previous Balance:</label>
+                <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
+
+                <label for="paidAmount">Paid Amount:</label>
+                <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
 
                 <button type="button" onclick="generateBill()">Generate Bill</button>
             </form>
