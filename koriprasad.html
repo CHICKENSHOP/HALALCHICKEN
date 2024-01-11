@@ -144,6 +144,11 @@
 
             document.body.removeChild(element);
         }
+
+        function changeLanguage() {
+            var languageSelect = document.getElementById('languageSelect').value;
+            setLanguage(languageSelect);
+        }
     </script>
 </head>
 <body onload="initializePage()">
@@ -170,6 +175,12 @@
 
         <label for="paidAmount">Paid Amount:</label>
         <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
+
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="english" selected>English</option>
+            <option value="telugu">తెలుగు</option>
+        </select>
 
         <button type="button" onclick="calculateBill()">Calculate Bill</button>
     </form>
