@@ -87,7 +87,7 @@
         function setLanguage(selectedLanguage) {
             var elements = document.getElementsByClassName('language-telugu');
             for (var i = 0; i < elements.length; i++) {
-                elements[i].style.display = (selectedLanguage === 'telugu') ? 'inline' : 'none';
+                elements[i].style.display = (selectedLanguage === 'telugu') ? 'block' : 'none';
             }
         }
 
@@ -117,18 +117,18 @@
             // Display the bill details on the webpage
             var billDetails = document.getElementById('billDetails');
             billDetails.innerHTML = '<h3>Bill Details:</h3>' +
-                '<p>Restaurant: Kori Prasad</p>' +
+                '<p>Restaurant: Mubarak Chicken Center (ముబారక్ చికెన్ సెంటర్)</p>' +
                 '<p>Date: ' + date + '</p>' +
-                '<p>Quantity of Chicken: ' + quantityNum + '</p>' +
-                '<p>Weight of Chicken (kg): ' + weightNum + '</p>' +
-                '<p>Price per Kg: ₹' + pricePerKgNum.toFixed(2) + '</p>' +
-                '<p>Bill Amount: ₹' + billAmount.toFixed(2) + '</p>' +
-                '<p>Previous Balance: ₹' + previousBalanceNum.toFixed(2) + '</p>' +
-                '<p>Paid Amount: ₹' + paidAmountNum.toFixed(2) + '</p>' +
-                '<p>New Total Balance: ₹' + newTotalBalance.toFixed(2) + '</p>';
+                '<p>Quantity of Chicken (చికెన్ సంఖ్య): ' + quantityNum + '</p>' +
+                '<p>Weight of Chicken (kg) (చికెన్ బరువు): ' + weightNum + '</p>' +
+                '<p>Price per Kg (కిలోకు ధర): ₹' + pricePerKgNum.toFixed(2) + '</p>' +
+                '<p>Bill Amount (బిల్ మొత్తం): ₹' + billAmount.toFixed(2) + '</p>' +
+                '<p>Previous Balance (మునుపటి సమయంలో బాకి): ₹' + previousBalanceNum.toFixed(2) + '</p>' +
+                '<p>Paid Amount (చెల్లింపు మొత్తం): ₹' + paidAmountNum.toFixed(2) + '</p>' +
+                '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹' + newTotalBalance.toFixed(2) + '</p>';
 
             // Save bill details for download
-            saveBillDetails('koriprasad.png', billDetails.innerHTML);
+            saveBillDetails('mubarak_chicken_center.png', billDetails.innerHTML);
         }
 
         function saveBillDetails(filename, content) {
@@ -144,51 +144,40 @@
 
             document.body.removeChild(element);
         }
-
-        function changeLanguage() {
-            var languageSelect = document.getElementById('languageSelect').value;
-            setLanguage(languageSelect);
-        }
     </script>
 </head>
 <body onload="initializePage()">
 
     <header>
-        <h1 id="headerTitle">ఆహార ప్రతిస్థానం ఎంచుకోండి</h1>
+        <h1 id="headerTitle">ముబారక్ చికెన్ సెంటర్</h1>
     </header>
 
     <form id="billForm">
-        <label for="date">Date:</label>
+        <label for="date">Date (తేది):</label>
         <input type="date" id="date" name="date" required>
 
-        <label for="quantity">Quantity of Chicken:</label>
+        <label for="quantity">Quantity of Chicken (చికెన్ సంఖ్య):</label>
         <input type="number" id="quantity" name="quantity" step="1" required>
 
-        <label for="weight">Weight of Chicken (kg):</label>
+        <label for="weight">Weight of Chicken (kg) (చికెన్ బరువు):</label>
         <input type="number" id="weight" name="weight" step="0.01" required>
 
-        <label for="pricePerKg">Price per Kg:</label>
+        <label for="pricePerKg">Price per Kg (కిలోకు ధర):</label>
         <input type="number" id="pricePerKg" name="pricePerKg" step="0.01" required>
 
-        <label for="previousBalance">Previous Balance:</label>
+        <label for="previousBalance">Previous Balance (మునుపటి సమయంలో బాకి):</label>
         <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
 
-        <label for="paidAmount">Paid Amount:</label>
+        <label for="paidAmount">Paid Amount (చెల్లింపు మొత్తం):</label>
         <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
 
-        <label for="languageSelect">Select Language:</label>
-        <select id="languageSelect" onchange="changeLanguage()">
-            <option value="english" selected>English</option>
-            <option value="telugu">తెలుగు</option>
-        </select>
-
-        <button type="button" onclick="calculateBill()">Calculate Bill</button>
+        <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
     </form>
 
     <div id="billDetails" class="language-telugu"></div>
 
-    <button id="exportButton" onclick="saveBillDetails('koriprasad.png', document.getElementById('billDetails').innerHTML)">
-        Export Bill as Image (PNG)
+    <button id="exportButton" onclick="saveBillDetails('mubarak_chicken_center.png', document.getElementById('billDetails').innerHTML)">
+        Export Bill as Image (PNG) (బిల్ చిత్రంగా ఎగుమతి)
     </button>
 
 </body>
