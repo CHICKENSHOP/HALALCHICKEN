@@ -31,10 +31,11 @@ db.collection('restaurants').get()
         console.error('Error getting restaurants: ', error);
     });
 
-// Function to load the selected restaurant's page
+// Function to load the selected restaurant's page with calculated bill
 function loadRestaurantPage() {
     const selectedPageURL = restaurantDropdown.value;
     if (selectedPageURL) {
-        window.location.href = selectedPageURL;
+        const totalBill = calculateTotalBill(); // Call a function to calculate the total bill
+        window.location.href = `${selectedPageURL}?totalBill=${totalBill}`;
     }
 }
