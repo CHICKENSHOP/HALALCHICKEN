@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koriprasad - Bill Generator</title>
+    <title>Kurtos Express - Bill Generator</title>
 
     <!-- Include html2canvas library -->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -67,18 +67,18 @@
 
             // Get user input values
             var weightOfBoneless = document.getElementById('weightOfBoneless').value;
-            var priceOfBoneless = document.getElementById('priceOfBoneless').value;
+            var pricePerKg = document.getElementById('pricePerKg').value;
             var previousBalance = document.getElementById('previousBalance').value;
             var paidAmount = document.getElementById('paidAmount').value;
 
             // Convert string values to numbers for calculations
             var weightOfBonelessNum = parseFloat(weightOfBoneless);
-            var priceOfBonelessNum = parseFloat(priceOfBoneless);
+            var pricePerKgNum = parseFloat(pricePerKg);
             var previousBalanceNum = parseFloat(previousBalance);
             var paidAmountNum = parseFloat(paidAmount);
 
             // Calculate the bill amount
-            var billAmount = (weightOfBonelessNum * priceOfBonelessNum) + (10 * weightOfBonelessNum);
+            var billAmount = weightOfBonelessNum * pricePerKgNum;
 
             // Calculate the new total balance
             var newTotalBalance = billAmount + previousBalanceNum - paidAmountNum;
@@ -86,14 +86,14 @@
             // Display the bill details on the webpage
             var billDetails = document.getElementById('billDetails');
             billDetails.innerHTML = '<h3>Bill Details:</h3>' +
-                '<p>Restaurant: Koriprasad (కోరి ప్రసాద్)</p>' +
+                '<p>Restaurant: Kurtos Express</p>' +
                 '<p>Date: ' + date + '</p>' +
-                '<p>Weight of Boneless Chicken (kg) (బోన్‌లెస్ చికెన్ బరువు): ' + weightOfBonelessNum + '</p>' +
-                '<p>Price of Boneless Chicken per Kg (బోన్‌లెస్ చికెన్ కిలోకు ధర): ₹' + priceOfBonelessNum.toFixed(2) + '</p>' +
-                '<p>Bill Amount (బిల్ మొత్తం): ₹' + billAmount.toFixed(2) + '</p>' +
-                '<p>Previous Balance (మునుపటి సమయంలో బాకి): ₹' + previousBalanceNum.toFixed(2) + '</p>' +
-                '<p>Paid Amount (చెల్లింపు మొత్తం): ₹' + paidAmountNum.toFixed(2) + '</p>' +
-                '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹' + newTotalBalance.toFixed(2) + '</p>';
+                '<p>Weight of Boneless Chicken (kg): ' + weightOfBonelessNum + '</p>' +
+                '<p>Price per Kg: ₹' + pricePerKgNum.toFixed(2) + '</p>' +
+                '<p>Bill Amount: ₹' + billAmount.toFixed(2) + '</p>' +
+                '<p>Previous Balance: ₹' + previousBalanceNum.toFixed(2) + '</p>' +
+                '<p>Paid Amount: ₹' + paidAmountNum.toFixed(2) + '</p>' +
+                '<p>New Total Balance: ₹' + newTotalBalance.toFixed(2) + '</p>';
         }
 
         function exportBillAsImage() {
@@ -109,7 +109,7 @@
                 // Create a link element to trigger the download
                 var link = document.createElement('a');
                 link.href = image;
-                link.download = 'koriprasad_' + date + '.png';
+                link.download = 'kurtosexpress_' + date + '.png';
                 link.click();
             });
         }
@@ -119,23 +119,23 @@
 <body>
 
     <form id="billForm">
-        <label for="date">Date (తేది):</label>
+        <label for="date">Date:</label>
         <input type="date" id="date" name="date" required>
 
-        <label for="weightOfBoneless">Weight of Boneless Chicken (kg) (బోన్‌లెస్ చికెన్ బరువు):</label>
+        <label for="weightOfBoneless">Weight of Boneless Chicken (kg):</label>
         <input type="number" id="weightOfBoneless" name="weightOfBoneless" step="0.01" required>
 
-        <label for="priceOfBoneless">Price of Boneless Chicken per Kg (బోన్‌లెస్ చికెన్ కిలోకు ధర):</label>
-        <input type="number" id="priceOfBoneless" name="priceOfBoneless" step="0.01" required>
+        <label for="pricePerKg">Price per Kg:</label>
+        <input type="number" id="pricePerKg" name="pricePerKg" step="0.01" required>
 
-        <label for="previousBalance">Previous Balance (మునుపటి సమయంలో బాకి):</label>
+        <label for="previousBalance">Previous Balance:</label>
         <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
 
-        <label for="paidAmount">Paid Amount (చెల్లింపు మొత్తం):</label>
+        <label for="paidAmount">Paid Amount:</label>
         <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
 
-        <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
-        <button type="button" onclick="exportBillAsImage()">Export Bill as Image (బిల్ చిత్రంగా ఎగుమతి)</button>
+        <button type="button" onclick="calculateBill()">Calculate Bill</button>
+        <button type="button" onclick="exportBillAsImage()">Export Bill as Image</button>
     </form>
 
     <div id="billDetails"></div>
