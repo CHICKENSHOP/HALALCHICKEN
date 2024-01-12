@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ఆహార ప్రతిస్థానం ఎంచుకోండి</title>
+    <title>ఆహార ప్రతిస్థానం ఎంచుకోండి (Choose a Restaurant)</title>
 
     <style>
         body {
@@ -77,19 +76,28 @@
 
         /* Telugu language styles */
         .language-telugu {
-            display: none;
+            font-family: 'Gidugu', sans-serif;
         }
 
-        .telugu {
-            font-family: 'Gidugu', sans-serif;
+        .language-telugu .english {
+            display: none;
         }
 
         .language-telugu .telugu {
             display: inline;
         }
 
-        .language-telugu {
+        /* English language styles */
+        .language-english {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .language-english .telugu {
             display: none;
+        }
+
+        .language-english .english {
+            display: inline;
         }
     </style>
 
@@ -104,30 +112,33 @@
         }
     </script>
 </head>
-
 <body>
 
     <header>
-        <h1 id="headerTitle">ఆహార ప్రతిస్థానం ఎంచుకోండి</h1>
+        <h1 class="language-telugu telugu">ఆహార ప్రతిస్థానం ఎంచుకోండి</h1>
+        <h1 class="language-english english">Choose a Restaurant</h1>
     </header>
 
     <form id="restaurantForm" action="">
-
-        <label for="restaurantDropdown">రెస్టారెంట్ ఎంచుకోండి:</label>
+        <label for="restaurantDropdown" class="language-telugu telugu">రెస్టారెంట్ ఎంచుకోండి:</label>
+        <label for="restaurantDropdown" class="language-english english">Choose a Restaurant:</label>
         <select id="restaurantDropdown" onchange="redirectToRestaurant()">
-            <option value="" disabled selected>ఒక రెస్టారెంట్ ఎంచుకోండి</option>
-            <option value="koriprasad">కొరి ప్రసాద్</option>
-            <option value="kurtosExpress">కూర్తోస్ ఎక్స్ప్రెస్</option>
+            <option value="" disabled selected class="language-telugu telugu">ఒక రెస్టారెంట్ ఎంచుకోండి</option>
+            <option value="koriprasad" class="language-telugu telugu">కొరి ప్రసాద్</option>
+            <option value="kurtosexpress" class="language-english english">Kurtos Express</option>
+            <option value="sasibiryani" class="language-telugu telugu">ససి బిర్యాని</option>
             <!-- Add more options for other restaurants as needed -->
         </select>
-
-        <button type="button" onclick="redirectToRestaurant()">ముగింపు</button>
+        <button type="button" onclick="redirectToRestaurant()" class="language-telugu telugu">ముగింపు</button>
+        <button type="button" onclick="redirectToRestaurant()" class="language-english english">Next</button>
     </form>
 
-    <footer>
-        <p>&copy; 2024 ఆహార ప్రతిస్థానం ఎంచుకోండి - అన్ని హక్కులు ప్రకటించబడినవి.</p>
+    <footer class="language-telugu telugu">
+        <p>అన్ని హక్కులు ప్రకటించబడినవి.</p>
+    </footer>
+    <footer class="language-english english">
+        <p>All rights reserved.</p>
     </footer>
 
 </body>
-
 </html>
