@@ -59,6 +59,19 @@
         #billDetails {
             margin-top: 20px;
         }
+
+        /* Telugu language styles */
+        .language-telugu {
+            display: none;
+        }
+
+        .telugu {
+            font-family: 'Gidugu', sans-serif;
+        }
+
+        .language-telugu .telugu {
+            display: inline;
+        }
     </style>
 
     <script>
@@ -81,7 +94,7 @@
 
             var billDetails = document.getElementById('billDetails');
             billDetails.innerHTML = '<h3>Bill Details:</h3>' +
-                '<p>Restaurant: Koriprasad (కోరి ప్రసాద్)</p>' +
+                '<p>Restaurant: Koriprasad (కొరి ప్రసాద్)</p>' +
                 '<p>Date: ' + date + '</p>' +
                 '<p>Quantity of Chicken (చికెన్ సంఖ్య): ' + quantityNum + '</p>' +
                 '<p>Weight of Chicken (kg) (చికెన్ బరువు): ' + weightNum + '</p>' +
@@ -102,6 +115,20 @@
                 var image = canvas.toDataURL('image/png');
 
                 window.location.href = 'whatsapp://send?text=Check out this bill&image=' + encodeURIComponent(image);
+            });
+        }
+
+        function exportBillAsImage() {
+            var date = document.getElementById('date').value;
+            var billDetails = document.getElementById('billDetails');
+
+            html2canvas(billDetails).then(function (canvas) {
+                var image = canvas.toDataURL('image/png');
+
+                var link = document.createElement('a');
+                link.href = image;
+                link.download = 'koriprasad_' + date + '.png';
+                link.click();
             });
         }
     </script>
@@ -129,10 +156,12 @@
         <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
 
         <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
-        <button id="shareButton" style="display:none;" type="button" onclick="shareOnWhatsApp()">Share on WhatsApp (WhatsAppలో భాగం చేయండి)</button>
-    </form>
+        <button type="button" onclick="exportBillAsImage()">Export Bill as Image (బిల్ చిత్రంగా ఎగుమతి)</button>
 
-    <div id="billDetails"></div>
+        <div id="billDetails"></div>
+
+        <button id="shareButton" style="display:none;" onclick="shareOnWhatsApp()">Share on WhatsApp (WhatsAppలో భాగస్వామ్యం)</button>
+    </form>
 
 </body>
 
