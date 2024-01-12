@@ -90,19 +90,19 @@
             // Display the bill details on the webpage
             var billDetails = document.getElementById('billDetails');
             billDetails.innerHTML =
-                '<h3>Bill Details:</h3>' +
-                '<p>Restaurant: Sasi Biryani</p>' +
-                '<p>Date: ' + date + '</p>' +
-                '<p>Weight of Fry (kg): ' + weightFryNum + '</p>' +
-                '<p>Weight of Dum (kg): ' + weightDumNum + '</p>' +
-                '<p>Weight of Boneless (kg): ' + weightBonelessNum + '</p>' +
-                '<p>Weight of Joint (kg): ' + weightJointNum + '</p>' +
-                '<p>Weight of Kabab (kg): ' + weightKababNum + '</p>' +
-                '<p>Total Weight of Items: ' + totalWeight.toFixed(2) + ' kg</p>' +
-                '<p>Bill Amount: ₹' + billAmount.toFixed(2) + '</p>' +
-                '<p>Previous Balance: ₹' + previousBalanceNum.toFixed(2) + '</p>' +
-                '<p>Paid Amount: ₹' + paidAmountNum.toFixed(2) + '</p>' +
-                '<p>New Total Balance: ₹' + newTotalBalance.toFixed(2) + '</p>';
+                '<h3>Bill Details (బిల్ వివరాలు):</h3>' +
+                '<p>Restaurant (హోటల్): Sasi Biryani</p>' +
+                '<p>Date (తేది): ' + date + '</p>' +
+                '<p>Weight of Fry (kg) (ఫ్రై బరువు): ' + weightFryNum + '</p>' +
+                '<p>Weight of Dum (kg) (డం బరువు): ' + weightDumNum + '</p>' +
+                '<p>Weight of Boneless (kg) (బోన్లెస్ బరువు): ' + weightBonelessNum + '</p>' +
+                '<p>Weight of Joint (kg) (జాయింట్ బరువు): ' + weightJointNum + '</p>' +
+                '<p>Weight of Kabab (kg) (కబాబ్ బరువు): ' + weightKababNum + '</p>' +
+                '<p>Total Weight of Items (అంశాల మొత్తం): ' + totalWeight.toFixed(2) + ' kg</p>' +
+                '<p>Bill Amount (బిల్ మొత్తం): ₹' + billAmount.toFixed(2) + '</p>' +
+                '<p>Previous Balance (మునుపటి సమయంలో బాకి): ₹' + previousBalanceNum.toFixed(2) + '</p>' +
+                '<p>Paid Amount (చెల్లింపు మొత్తం): ₹' + paidAmountNum.toFixed(2) + '</p>' +
+                '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹' + newTotalBalance.toFixed(2) + '</p>';
         }
 
         function exportBillAsImage() {
