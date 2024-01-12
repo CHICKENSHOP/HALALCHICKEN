@@ -1,1 +1,179 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Sasi Biryani - Bill Generator</title><script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script><style>body{font-family:'Arial',sans-serif;background-color:#f4f4f4;color:#333;margin:0;padding:20px;text-align:center;}form{background-color:#fff;border-radius:8px;padding:20px;box-shadow:0 0 10px rgba(0,0,0,0.1);}label{display:block;margin-bottom:5px;font-weight:bold;}input{width:100%;padding:8px;margin-bottom:15px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box;}button{background-color:#4caf50;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;font-size:16px;margin-top:10px;}button:hover{background-color:#45a049;}#billDetails{margin-top:20px;}</style><script>function calculateBill(){var date=document.getElementById('date').value;var weightFry=document.getElementById('weightFry').value;var weightDum=document.getElementById('weightDum').value;var weightBoneless=document.getElementById('weightBoneless').value;var weightJoint=document.getElementById('weightJoint').value;var weightKabab=document.getElementById('weightKabab').value;var paperRate=document.getElementById('paperRate').value;var previousBalance=document.getElementById('previousBalance').value;var paidAmount=document.getElementById('paidAmount').value;var weightFryNum=parseFloat(weightFry);var weightDumNum=parseFloat(weightDum);var weightBonelessNum=parseFloat(weightBoneless);var weightJointNum=parseFloat(weightJoint);var weightKababNum=parseFloat(weightKabab);var paperRateNum=parseFloat(paperRate);var previousBalanceNum=parseFloat(previousBalance);var paidAmountNum=parseFloat(paidAmount);var totalWeight=weightFryNum+weightDumNum+weightBonelessNum+weightJointNum+weightKababNum;var billAmount=paperRateNum*1.7*totalWeight;var billDetails=document.getElementById('billDetails');billDetails.innerHTML='<h3>Bill Details:</h3>'+'<p>ఆహారాల ఆకరిష్ట దేవానం: Sasi Biryani</p>'+'<p>తేది: '+date+'</p>'+'<p>ఫ్రై బరువు (kg): '+weightFryNum+'</p>'+'<p>డం బరువు (kg): '+weightDumNum+'</p>'+'<p>బోన్లెస్ బరువు (kg): '+weightBonelessNum+'</p>'+'<p>జాయింట్ బరువు (kg): '+weightJointNum+'</p>'+'<p>కబాబ్ బరువు (kg): '+weightKababNum+'</p>'+'<p>ఆహారాల ఆకరిష్ట బరువు మొత్తం (అంశాల మొత్తం బరువు): '+totalWeight.toFixed(2)+'</p>'+'<p>చికెన్ పేపర్ రేట్ (బిల్ మొత్తం): ₹'+paperRateNum.toFixed(2)+'</p>'+'<p>మునుపటి సమయంలో బాకి: ₹'+previousBalanceNum.toFixed(2)+'</p>'+'<p>చెల్లింపు మొత్తం: ₹'+paidAmountNum.toFixed(2)+'</p>'+'<p>కొత్త మొత్తం స్థితి: ₹'+billAmount.toFixed(2)+'</p>';}function exportBillAsImage(){var date=document.getElementById('date').value;var billDetails=document.getElementById('billDetails');html2canvas(billDetails).then(function(canvas){var image=canvas.toDataURL('image/png');var link=document.createElement('a');link.href=image;link.download='sasibiryani_'+date+'.png';link.click();});}</script></head><body><form id='billForm'><label for='date'>Date (తేది):</label><input type='date' id='date' name='date' required><label for='weightFry'>Weight of Fry (kg) (ఫ్రై బరువు):</label><input type='number' id='weightFry' name='weightFry' step='0.01' required><label for='weightDum'>Weight of Dum (kg) (డం బరువు):</label><input type='number' id='weightDum' name='weightDum' step='0.01' required><label for='weightBoneless'>Weight of Boneless (kg) (బోన్లెస్ బరువు):</label><input type='number' id='weightBoneless' name='weightBoneless' step='0.01' required><label for='weightJoint'>Weight of Joint (kg) (జాయింట్ బరువు):</label><input type='number' id='weightJoint' name='weightJoint' step='0.01' required><label for='weightKabab'>Weight of Kabab (kg) (కబాబ్ బరువు):</label><input type='number' id='weightKabab' name='weightKabab' step='0.01' required><label for='paperRate'>Paper Rate of Chicken (చికెన్ పేపర్ రేట్):</label><input type='number' id='paperRate' name='paperRate' step='0.01' required><label for='previousBalance'>Previous Balance (మునుపటి సమయంలో బాకి):</label><input type='number' id='previousBalance' name='previousBalance' step='0.01' required><label for='paidAmount'>Paid Amount (చెల్లింపు మొత్తం):</label><input type='number' id='paidAmount' name='paidAmount' step='0.01' required><button type='button' onclick='calculateBill()'>Calculate Bill (బిల్ లెక్కించు)</button><button type='button' onclick='exportBillAsImage()'>Export Bill as Image (బిల్ చిత్రంగా ఎగుమతి)</button><div id='billDetails'></div></form></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sasi Biryani - Bill Generator</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #billDetails {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .details-container {
+            width: 48%;
+            text-align: left;
+        }
+
+        .details-container h3 {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <script>
+        function calculateBill() {
+            var date = document.getElementById('date').value;
+            var weightFry = document.getElementById('weightFry').value;
+            var weightDum = document.getElementById('weightDum').value;
+            var weightBoneless = document.getElementById('weightBoneless').value;
+            var weightJoint = document.getElementById('weightJoint').value;
+            var weightKabab = document.getElementById('weightKabab').value;
+            var paperRate = document.getElementById('paperRate').value;
+            var previousBalance = document.getElementById('previousBalance').value;
+            var paidAmount = document.getElementById('paidAmount').value;
+
+            var weightFryNum = parseFloat(weightFry);
+            var weightDumNum = parseFloat(weightDum);
+            var weightBonelessNum = parseFloat(weightBoneless);
+            var weightJointNum = parseFloat(weightJoint);
+            var weightKababNum = parseFloat(weightKabab);
+            var paperRateNum = parseFloat(paperRate);
+            var previousBalanceNum = parseFloat(previousBalance);
+            var paidAmountNum = parseFloat(paidAmount);
+
+            // Calculate total weight of items
+            var totalWeight = weightFryNum + weightDumNum + weightBonelessNum + weightJointNum + weightKababNum;
+
+            // Calculate the bill amount (paper rate * 1.7 * total weight of items)
+            var billAmount = paperRateNum * 1.7 * totalWeight;
+
+            // Calculate the new total balance
+            var newTotalBalance = previousBalanceNum + billAmount - paidAmountNum;
+
+            // Display the bill details on the webpage
+            var billDetails = document.getElementById('billDetails');
+            billDetails.innerHTML =
+                '<div class="details-container">' +
+                '<h3>Bill Details (బిల్ వివరాలు):</h3>' +
+                '<p>Restaurant (ఆహారాల ఆకరిష్ట దేవానం): Sasi Biryani</p>' +
+                '<p>Date (తేది): ' + date + '</p>' +
+                '<p>Weight of Fry (kg) (ఫ్రై బరువు): ' + weightFryNum + '</p>' +
+                '<p>Weight of Dum (kg) (డం బరువు): ' + weightDumNum + '</p>' +
+                '<p>Weight of Boneless (kg) (బోన్లెస్ బరువు): ' + weightBonelessNum + '</p>' +
+                '<p>Weight of Joint (kg) (జాయింట్ బరువు): ' + weightJointNum + '</p>' +
+                '<p>Weight of Kabab (kg) (కబాబ్ బరువు): ' + weightKababNum + '</p>' +
+                '<p>Total Weight of Items (అంశాల మొత్తం బరువు): ' + totalWeight.toFixed(2) + '</p>' +
+                '<p>Bill Amount (బిల్ మొత్తం): ₹' + billAmount.toFixed(2) + '</p>' +
+                '<p>Previous Balance (మునుపటి సమయంలో బాకి): ₹' + previousBalanceNum.toFixed(2) + '</p>' +
+                '<p>Paid Amount (చెల్లింపు మొత్తం): ₹' + paidAmountNum.toFixed(2) + '</p>' +
+                '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹' + newTotalBalance.toFixed(2) + '</p>' +
+                '</div>' +
+                '<div class="details-container">' +
+                '<h3>బిల్ వివరాలు (Bill Details):</h3>' +
+                '<p>ఆహారాల ఆకరిష్ట దేవానం (Restaurant): Sasi Biryani</p>' +
+                '<p>తేది (Date): ' + date + '</p>' +
+                '<p>ఫ్రై బరువు (kg) (Weight of Fry): ' + weightFryNum + '</p>' +
+                '<p>డం బరువు (kg) (Weight of Dum): ' + weightDumNum + '</p>' +
+                '<p>బోన్లెస్ బరువు (kg) (Weight of Boneless): ' + weightBonelessNum + '</p>' +
+                '<p>జాయింట్ బరువు (kg) (Weight of Joint): ' + weightJointNum + '</p>' +
+                '<p>కబాబ్ బరువు (kg) (Weight of Kabab): ' + weightKababNum + '</p>' +
+                '<p>అంశాల మొత్తం బరువు (Total Weight of Items): ' + totalWeight.toFixed(2) + '</p>' +
+                '<p>బిల్ మొత్తం (Bill Amount): ₹' + billAmount.toFixed(2) + '</p>' +
+                '<p>మునుపటి సమయంలో బాకి (Previous Balance): ₹' + previousBalanceNum.toFixed(2) + '</p>' +
+                '<p>చెల్లింపు మొత్తం (Paid Amount): ₹' + paidAmountNum.toFixed(2) + '</p>' +
+                '<p>కొత్త మొత్తం స్థితి (New Total Balance): ₹' + newTotalBalance.toFixed(2) + '</p>' +
+                '</div>';
+        }
+
+        function exportBillAsImage() {
+            var date = document.getElementById('date').value;
+            var billDetails = document.getElementById('billDetails');
+
+            html2canvas(billDetails).then(function (canvas) {
+                var image = canvas.toDataURL('image/png');
+
+                var link = document.createElement('a');
+                link.href = image;
+                link.download = 'sasibiryani_' + date + '.png';
+                link.click();
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <form id="billForm">
+        <label for="date">Date (తేది):</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="weightFry">Weight of Fry (kg) (ఫ్రై బరువు):</label>
+        <input type="number" id="weightFry" name="weightFry" step="0.01" required>
+
+        <!-- Add other item weight inputs here -->
+
+        <label for="paperRate">Paper Rate of Chicken (చికెన్ పేపర్ రేట్):</label>
+        <input type="number" id="paperRate" name="paperRate" step="0.01" required>
+
+        <label for="previousBalance">Previous Balance (మునుపటి సమయంలో బాకి):</label>
+        <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
+
+        <label for="paidAmount">Paid Amount (చెల్లింపు మొత్తం):</label>
+        <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
+
+        <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
+        <button type="button" onclick="exportBillAsImage()">Export Bill as Image (బిల్ చిత్రంగా ఎగుమతి)</button>
+
+        <div id="billDetails"></div>
+    </form>
+</body>
+
+</html>
