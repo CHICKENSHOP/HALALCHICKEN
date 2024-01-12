@@ -72,23 +72,17 @@
     <script>
         function calculateBill() {
             var date = document.getElementById('date').value;
-            var weightFry = document.getElementById('weightFry').value;
-            var weightDum = document.getElementById('weightDum').value;
-            var weightBoneless = document.getElementById('weightBoneless').value;
-            var weightJoint = document.getElementById('weightJoint').value;
-            var weightKabab = document.getElementById('weightKabab').value;
-            var paperRate = document.getElementById('paperRate').value;
-            var previousBalance = document.getElementById('previousBalance').value;
-            var paidAmount = document.getElementById('paidAmount').value;
 
-            var weightFryNum = parseFloat(weightFry);
-            var weightDumNum = parseFloat(weightDum);
-            var weightBonelessNum = parseFloat(weightBoneless);
-            var weightJointNum = parseFloat(weightJoint);
-            var weightKababNum = parseFloat(weightKabab);
-            var paperRateNum = parseFloat(paperRate);
-            var previousBalanceNum = parseFloat(previousBalance);
-            var paidAmountNum = parseFloat(paidAmount);
+            // Get item weights
+            var weightFryNum = parseFloat(document.getElementById('weightFry').value);
+            var weightDumNum = parseFloat(document.getElementById('weightDum').value);
+            var weightBonelessNum = parseFloat(document.getElementById('weightBoneless').value);
+            var weightJointNum = parseFloat(document.getElementById('weightJoint').value);
+            var weightKababNum = parseFloat(document.getElementById('weightKabab').value);
+
+            var paperRateNum = parseFloat(document.getElementById('paperRate').value);
+            var previousBalanceNum = parseFloat(document.getElementById('previousBalance').value);
+            var paidAmountNum = parseFloat(document.getElementById('paidAmount').value);
 
             // Calculate total weight of items
             var totalWeight = weightFryNum + weightDumNum + weightBonelessNum + weightJointNum + weightKababNum;
@@ -119,18 +113,18 @@
                 '</div>' +
                 '<div class="details-container">' +
                 '<h3>బిల్ వివరాలు (Bill Details):</h3>' +
-                '<p>ఆహారాల ఆకరిష్ట దేవానం (Restaurant): Sasi Biryani</p>' +
-                '<p>తేది (Date): ' + date + '</p>' +
-                '<p>ఫ్రై బరువు (kg) (Weight of Fry): ' + weightFryNum + '</p>' +
-                '<p>డం బరువు (kg) (Weight of Dum): ' + weightDumNum + '</p>' +
-                '<p>బోన్లెస్ బరువు (kg) (Weight of Boneless): ' + weightBonelessNum + '</p>' +
-                '<p>జాయింట్ బరువు (kg) (Weight of Joint): ' + weightJointNum + '</p>' +
-                '<p>కబాబ్ బరువు (kg) (Weight of Kabab): ' + weightKababNum + '</p>' +
-                '<p>అంశాల మొత్తం బరువు (Total Weight of Items): ' + totalWeight.toFixed(2) + '</p>' +
-                '<p>బిల్ మొత్తం (Bill Amount): ₹' + billAmount.toFixed(2) + '</p>' +
-                '<p>మునుపటి సమయంలో బాకి (Previous Balance): ₹' + previousBalanceNum.toFixed(2) + '</p>' +
-                '<p>చెల్లింపు మొత్తం (Paid Amount): ₹' + paidAmountNum.toFixed(2) + '</p>' +
-                '<p>కొత్త మొత్తం స్థితి (New Total Balance): ₹' + newTotalBalance.toFixed(2) + '</p>' +
+                '<p>ఆహారాల ఆకరిష్ట దేవానం: Sasi Biryani</p>' +
+                '<p>తేది: ' + date + '</p>' +
+                '<p>ఫ్రై బరువు: ' + weightFryNum + '</p>' +
+                '<p>డం బరువు: ' + weightDumNum + '</p>' +
+                '<p>బోన్లెస్ బరువు: ' + weightBonelessNum + '</p>' +
+                '<p>జాయింట్ బరువు: ' + weightJointNum + '</p>' +
+                '<p>కబాబ్ బరువు: ' + weightKababNum + '</p>' +
+                '<p>అంశాల మొత్తం బరువు: ' + totalWeight.toFixed(2) + '</p>' +
+                '<p>బిల్ మొత్తం: ₹' + billAmount.toFixed(2) + '</p>' +
+                '<p>మునుపటి సమయంలో బాకి: ₹' + previousBalanceNum.toFixed(2) + '</p>' +
+                '<p>చెల్లింపు మొత్తం: ₹' + paidAmountNum.toFixed(2) + '</p>' +
+                '<p>కొత్త మొత్తం స్థితి: ₹' + newTotalBalance.toFixed(2) + '</p>' +
                 '</div>';
         }
 
@@ -158,7 +152,17 @@
         <label for="weightFry">Weight of Fry (kg) (ఫ్రై బరువు):</label>
         <input type="number" id="weightFry" name="weightFry" step="0.01" required>
 
-        <!-- Add other item weight inputs here -->
+        <label for="weightDum">Weight of Dum (kg) (డం బరువు):</label>
+        <input type="number" id="weightDum" name="weightDum" step="0.01" required>
+
+        <label for="weightBoneless">Weight of Boneless (kg) (బోన్లెస్ బరువు):</label>
+        <input type="number" id="weightBoneless" name="weightBoneless" step="0.01" required>
+
+        <label for="weightJoint">Weight of Joint (kg) (జాయింట్ బరువు):</label>
+        <input type="number" id="weightJoint" name="weightJoint" step="0.01" required>
+
+        <label for="weightKabab">Weight of Kabab (kg) (కబాబ్ బరువు):</label>
+        <input type="number" id="weightKabab" name="weightKabab" step="0.01" required>
 
         <label for="paperRate">Paper Rate of Chicken (చికెన్ పేపర్ రేట్):</label>
         <input type="number" id="paperRate" name="paperRate" step="0.01" required>
