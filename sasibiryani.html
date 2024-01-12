@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sasi Biryani - Bill Generator</title>
+
+    <!-- Include html2canvas library -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #billDetails {
+            margin-top: 20px;
+        }
+
+        /* Telugu language styles */
+        .language-telugu {
+            display: none;
+        }
+
+        .telugu {
+            font-family: 'Gidugu', sans-serif;
+        }
+
+        .language-telugu .telugu {
+            display: inline;
+        }
+    </style>
+
+    <script>
+        function calculateBill() {
+            var date = document.getElementById('date').value;
+            var weightOfFry = document.getElementById('weightOfFry').value;
+            var weightOfDum = document.getElementById('weightOfDum').value;
+            var weightOfBoneless = document.getElementById('weightOfBoneless').value;
+            var weightOfJoint = document.getElementById('weightOfJoint').value;
+            var weightOfKabab = document.getElementById('weightOfKabab').value;
+            var paperRate = document.getElementById('paperRate').value;
+
+            var weightOfFryNum = parseFloat(weightOfFry);
+            var weightOfDumNum = parseFloat(weightOfDum);
+            var weightOfBonelessNum = parseFloat(weightOfBoneless);
+            var weightOfJointNum = parseFloat(weightOfJoint);
+            var weightOfKababNum = parseFloat(weightOfKabab);
+            var paperRateNum = parseFloat(paperRate);
+
+            var totalWeight = weightOfFryNum + weightOfDumNum + weightOfBonelessNum + weightOfJointNum + weightOfKababNum;
+            var billAmount = totalWeight * paperRateNum * 1.7;
+
+            var billDetails = document.getElementById('billDetails');
+            billDetails.innerHTML = '<h3>Bill Details:</h3>' +
+                '<p>Restaurant: Sasi Biryani (సాసి బిర్యాని)</p>' +
+                '<p>Date: ' + date + '</p>' +
+                '<p>Weight of Fry (kg) (ఫ్రై బరువు): ' + weightOfFryNum + '</p>' +
+                '<p>Weight of Dum (kg) (డం బరువు): ' + weightOfDumNum + '</p>' +
+                '<p>Weight of Boneless (kg) (బోన్లెస్ బరువు): ' + weightOfBonelessNum + '</p>' +
+                '<p>Weight of Joint (kg) (జాయింట్ బరువు): ' + weightOfJointNum + '</p>' +
+                '<p>Weight of Kabab (kg) (కబాబ్ బరువు): ' + weightOfKababNum + '</p>' +
+                '<p>Total Weight of Items (అంశాల మొత్తం బరువు): ' + totalWeight.toFixed(2) + '</p>' +
+                '<p>Bill Amount (బిల్ మొత్తం): ₹' + billAmount.toFixed(2) + '</p>';
+
+            document.getElementById('shareButton').style.display = 'block';
+        }
+
+        function shareOnWhatsApp() {
+            var date = document.getElementById('date').value;
+            var billDetails = document.getElementById('billDetails');
+
+            html2canvas(billDetails).then(function (canvas) {
+                var image = canvas.toDataURL('image/png');
+
+                window.location.href = 'whatsapp://send?text=Check out this bill&image=' + encodeURIComponent(image);
+            });
+        }
+
+        function exportBillAsImage() {
+            var date = document.getElementById('date').value;
+            var billDetails = document.getElementById('billDetails');
+
+            html2canvas(billDetails).then(function (canvas) {
+                var image = canvas.toDataURL('image/png');
+
+                var link = document.createElement('a');
+                link.href = image;
+                link.download = 'sasibiryani_' + date + '.png';
+                link.click();
+            });
+        }
+    </script>
+</head>
+
+<body>
+
+    <form id="billForm">
+        <label for="date">Date (తేది):</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="weightOfFry">Weight of Fry (kg) (ఫ్రై బరువు):</label>
+        <input type="number" id="weightOfFry" name="weightOfFry" step="0.01" required>
+
+        <label for="weightOfDum">Weight of Dum (kg) (డం బరువు):</label>
+        <input type="number" id="weightOfDum" name="weightOfDum" step="0.01" required>
+
+        <label for="weightOfBoneless">Weight of Boneless (kg) (బోన్లెస్ బరువు):</label>
+        <input type="number" id="weightOfBoneless" name="weightOfBoneless" step="0.01" required>
+
+        <label for="weightOfJoint">Weight of Joint (kg) (జాయింట్ బరువు):</label>
+        <input type="number" id="weightOfJoint" name="weightOfJoint" step="0.01" required>
+
+        <label for="weightOfKabab">Weight of Kabab (kg) (కబాబ్ బరువు):</label>
+        <input type="number" id="weightOfKabab" name="weightOfKabab" step="0.01" required>
+
+        <label for="paperRate">Paper Rate of Chicken (చికెన్ పేపర్ రేట్):</label>
+        <input type="number" id="paperRate" name="paperRate" step="0.01" required>
+
+        <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
+        <button type="button" onclick="exportBillAsImage()">Export Bill as Image (బిల్ చిత్రంగా ఎగుమతి)</button>
+
+        <div id="billDetails"></div>
+
+        <button id="shareButton" style="display:none;" onclick="shareOnWhatsApp()">Share on WhatsApp (WhatsAppలో భాగస్వామ్యం)</button>
+    </form>
+
+</body>
+
+</html>
