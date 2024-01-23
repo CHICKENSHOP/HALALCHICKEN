@@ -78,12 +78,12 @@
         function calculateBill() {
             var date = document.getElementById('date').value;
             var weight = document.getElementById('weight').value;
-            var pricePerKg = document.getElementById('pricePerKg').value;
             var previousBalance = document.getElementById('previousBalance').value;
             var paidAmount = document.getElementById('paidAmount').value;
 
             var weightNum = parseFloat(weight);
-            var pricePerKgNum = parseFloat(pricePerKg);
+            var pricePerKgNum = 300; // Fixed price per kilogram
+
             var previousBalanceNum = parseFloat(previousBalance);
             var paidAmountNum = parseFloat(paidAmount);
 
@@ -125,9 +125,6 @@
 
         <label for="weight">Weight of Boneless (kg) (బోన్లెస్ బరువు):</label>
         <input type="number" id="weight" name="weight" step="0.01" required>
-
-        <label for="pricePerKg">Price per Kg (కిలోకు ధర):</label>
-        <input type="number" id="pricePerKg" name="pricePerKg" step="0.01" required>
 
         <label for="previousBalance">Previous Balance (మునుపటి సమయంలో బాకి):</label>
         <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
