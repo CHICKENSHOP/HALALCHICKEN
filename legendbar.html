@@ -94,11 +94,12 @@
             var previousBalanceNum = parseFloat(previousBalance);
             var paidAmountNum = parseFloat(paidAmount);
 
-            // Calculate bill amount
-            var billAmountChicken = (weightNumChicken * pricePerKgNumChicken) + (cuttingChargesNum * bodyQuantityNum);
+            // Calculate bill amounts
+            var bodyAmount = (cuttingChargesNum * bodyQuantityNum);
             var liverAmount = liverWeightNum * 150;
+            var chickenAmount = bodyAmount + liverAmount;
 
-            var newTotalBalance = billAmountChicken + liverAmount + previousBalanceNum - paidAmountNum;
+            var newTotalBalance = chickenAmount + previousBalanceNum - paidAmountNum;
 
             var billDetails = document.getElementById('billDetails');
             billDetails.innerHTML = '<h3>Bill Details:</h3>' +
@@ -110,7 +111,8 @@
                 '<p>Cutting Charges (కట్టింగ్ ఛార్జెస్): ₹' + cuttingChargesNum.toFixed(2) + '</p>' +
                 '<p>Liver Weight (kg) (లివర్ బరువు): ' + liverWeightNum + '</p>' +
                 '<p>Liver Amount (లివర్ బిల్ మొత్తం): ₹' + liverAmount.toFixed(2) + '</p>' +
-                '<p>Bill Amount Chicken (బిల్ మొత్తం): ₹' + billAmountChicken.toFixed(2) + '</p>' +
+                '<p>Body Amount (బాడి బిల్ మొత్తం): ₹' + bodyAmount.toFixed(2) + '</p>' +
+                '<p>Chicken Amount (చికెన్ బిల్ మొత్తం): ₹' + chickenAmount.toFixed(2) + '</p>' +
                 '<p>Previous Balance (మునుపటి సమయంలో బాకి): ₹' + previousBalanceNum.toFixed(2) + '</p>' +
                 '<p>Paid Amount (చెల్లింపు మొత్తం): ₹' + paidAmountNum.toFixed(2) + '</p>' +
                 '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹' + newTotalBalance.toFixed(2) + '</p>';
