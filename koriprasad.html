@@ -121,6 +121,32 @@
                 '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹' + newTotalBalance.toFixed(2) + '</p>';
 
             document.getElementById('shareButton').style.display = 'block';
+            document.getElementById('downloadButton').style.display = 'block';
+        }
+
+        function downloadBill() {
+            var date = document.getElementById('date').value;
+            var billDetails = document.getElementById('billDetails');
+
+            html2canvas(billDetails).then(function (canvas) {
+                var image = canvas.toDataURL('image/png');
+
+                var link = document.createElement('a');
+                link.href = image;
+                link.download = 'koriprasad_' + date + '.png';
+                link.click();
+            });
+        }
+
+        function shareOnWhatsApp() {
+            var date = document.getElementById('date').value;
+            var billDetails = document.getElementById('billDetails');
+
+            html2canvas(billDetails).then(function (canvas) {
+                var image = canvas.toDataURL('image/png');
+
+                window.location.href = 'whatsapp://send?text=Check out this bill&image=' + encodeURIComponent(image);
+            });
         }
     </script>
 </head>
@@ -137,8 +163,7 @@
         <label for="weight">Weight of Chicken (kg) (కోడి బరువు):</label>
         <input type="number" id="weight" name="weight" step="0.01" required>
 
-        <label for="pricePerKg">Price
-            <label for="pricePerKg">Price per Kg Chicken (కిలోకు ధర):</label>
+        <label for="pricePerKg">Price per Kg Chicken (కిలోకు ధర):</label>
         <input type="number" id="pricePerKg" name="pricePerKg" step="0.01" required>
 
         <label for="quantityFarm">Quantity from Farm (ఫారం సంఖ్య):</label>
@@ -161,20 +186,8 @@
         <div id="billDetails"></div>
 
         <button id="shareButton" style="display:none;" onclick="shareOnWhatsApp()">Share on WhatsApp (WhatsAppలో భాగస్వామ్యం)</button>
+        <button id="downloadButton" style="display:none;" onclick="downloadBill()">Download Bill</button>
     </form>
-
-    <script>
-        function shareOnWhatsApp() {
-            var date = document.getElementById('date').value;
-            var billDetails = document.getElementById('billDetails');
-
-            html2canvas(billDetails).then(function (canvas) {
-                var image = canvas.toDataURL('image/png');
-
-                window.location.href = 'whatsapp://send?text=Check out this bill&image=' + encodeURIComponent(image);
-            });
-        }
-    </script>
 
 </body>
 
