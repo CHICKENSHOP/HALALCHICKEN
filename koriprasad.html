@@ -137,4 +137,45 @@
         <label for="weight">Weight of Chicken (kg) (కోడి బరువు):</label>
         <input type="number" id="weight" name="weight" step="0.01" required>
 
-        <label for="pricePerKg">Price per Kg Chicken
+        <label for="pricePerKg">Price
+            <label for="pricePerKg">Price per Kg Chicken (కిలోకు ధర):</label>
+        <input type="number" id="pricePerKg" name="pricePerKg" step="0.01" required>
+
+        <label for="quantityFarm">Quantity from Farm (ఫారం సంఖ్య):</label>
+        <input type="number" id="quantityFarm" name="quantityFarm" step="1" required>
+
+        <label for="weightFarm">Weight from Farm (kg) (ఫారం బరువు):</label>
+        <input type="number" id="weightFarm" name="weightFarm" step="0.01" required>
+
+        <label for="pricePerKgFarm">Price per Kg from Farm (ఫారం కిలోకు ధర):</label>
+        <input type="number" id="pricePerKgFarm" name="pricePerKgFarm" step="0.01" required>
+
+        <label for="previousBalance">Previous Balance (మునుపటి సమయంలో బాకి):</label>
+        <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
+
+        <label for="paidAmount">Paid Amount (చెల్లింపు మొత్తం):</label>
+        <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
+
+        <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
+
+        <div id="billDetails"></div>
+
+        <button id="shareButton" style="display:none;" onclick="shareOnWhatsApp()">Share on WhatsApp (WhatsAppలో భాగస్వామ్యం)</button>
+    </form>
+
+    <script>
+        function shareOnWhatsApp() {
+            var date = document.getElementById('date').value;
+            var billDetails = document.getElementById('billDetails');
+
+            html2canvas(billDetails).then(function (canvas) {
+                var image = canvas.toDataURL('image/png');
+
+                window.location.href = 'whatsapp://send?text=Check out this bill&image=' + encodeURIComponent(image);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
