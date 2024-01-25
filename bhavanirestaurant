@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhavani Restaurant - Bill Generator</title>
+
+    <!-- Include html2canvas library -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #billDetails {
+            margin-top: 20px;
+        }
+
+        /* Telugu language styles */
+        .language-telugu {
+            display: none;
+        }
+
+        .telugu {
+            font-family: 'Gidugu', sans-serif;
+        }
+
+        .language-telugu .telugu {
+            display: inline;
+        }
+    </style>
+
+    <script>
+        function calculateBill() {
+            var date = document.getElementById('date').value;
+            var weight = document.getElementById('weight').value;
+            var chickenWeight = document.getElementById('chickenWeight').value;
+            var chickenQuantity = document.getElementById('chickenQuantity').value;
+            var chickenPrice = document.getElementById('chickenPrice').value;
+            var cuttingCharges = document.getElementById('cuttingCharges').value;
+            var previousBalance = document.getElementById('previousBalance').value;
+            var paidAmount = document.getElementById('paidAmount').value;
+            var bonelessPrice = document.getElementById('bonelessPrice').value;
+
+            var weightNum = parseFloat(weight);
+            var chickenWeightNum = parseFloat(chickenWeight);
+            var chickenQuantityNum = parseInt(chickenQuantity);
+            var chickenPriceNum = parseFloat(chickenPrice);
+            var cuttingChargesNum = parseFloat(cuttingCharges);
+            var bonelessPriceNum = parseFloat(bonelessPrice);
+
+            var previousBalanceNum = parseFloat(previousBalance);
+            var paidAmountNum = parseFloat(paidAmount);
+
+            var bonelessBillAmount = weightNum * bonelessPriceNum;
+
+            // Calculate fry and dum bill
+            var fryAndDumAmount = (chickenWeightNum * chickenPriceNum) + (cuttingChargesNum * chickenQuantityNum);
+
+            var chickenBill = bonelessBillAmount + fryAndDumAmount;
+
+            var newTotalBalance = chickenBill + previousBalanceNum - paidAmountNum;
+
+            var billDetails = document.getElementById('billDetails');
+            billDetails.innerHTML = '<h3>Bill Details:</h3>' +
+                '<p>Restaurant: Bhavani Restaurant (భవాని రెస్టారెంట్)</p>' +
+                '<p>Date: ' + date + '</p>' +
+                '<p>Boneless Price (బోన్లెస్ ధర): ₹' + bonelessPriceNum.toFixed(2) + '</p>' +
+                '<p>Boneless (kg) (బోన్లెస్ బరువు): ' + weightNum + '</p>' +
+                '<p>Boneless Bill (బోన్లెస్ బిల్): ₹' + bonelessBillAmount.toFixed(2) + '</p>' +
+                '<p>Chicken weight (kg) (కోడి బరువు): ' + chickenWeightNum + '</p>' +
+                '<p>Cutting Charges (కటింగ్ ఛార్జ్): ₹' + cuttingChargesNum.toFixed(2) + '</p>' +
+                '<p>Price per Kg (కిలోకు ధర): ₹' + chickenPriceNum.toFixed(2) + '</p>' +
+                '<p>Fry and Dum (ఫ్రై మరియు దం): ₹' + fryAndDumAmount.toFixed(2) + '</p>' +
+                '<p>Chicken Bill (చికెన్ బిల్): ₹' + chickenBill.toFixed(2) + '</p>' +
+                '<p>Previous Balance (మునుపటి సమయంలో బాకి): ₹' + previousBalanceNum.toFixed(2) + '</p>' +
+                '<p>Paid Amount (చెల్లింపు మొత్తం): ₹' + paidAmountNum.toFixed(2) + '</p>' +
+                '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹' + newTotalBalance.toFixed(2) + '</p>';
+        }
+
+        function exportBillAsImage() {
+            var date = document.getElementById('date').value;
+            var billDetails = document.getElementById('billDetails');
+
+            html2canvas(billDetails).then(function (canvas) {
+                var image = canvas.toDataURL('image/png');
+
+                var link = document.createElement('a');
+                link.href = image;
+                link.download = 'bhavani_' + date + '.png';
+                link.click();
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <form id="billForm">
+        <label for="date">Date (తేది):</label>
+        <input type="date" id="date" name="date" required>
+
+        <!-- Remaining input fields remain unchanged -->
+
+        <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
+        <button type="button" onclick="exportBillAsImage()">Export Bill as Image (బిల్ ఎగుమతి)</button>
+
+        <div id="billDetails"></div>
+    </form>
+</body>
+
+</html>
