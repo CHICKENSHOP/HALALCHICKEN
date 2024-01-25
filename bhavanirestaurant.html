@@ -115,7 +115,7 @@
                 '<p>Chicken weight (kg) (కోడి బరువు): ' + chickenWeightNum + '</p>' +
                 '<p>Cutting Charges (కటింగ్ ఛార్జ్): ₹' + cuttingChargesNum.toFixed(2) + '</p>' +
                 '<p>Price per Kg (కిలోకు ధర): ₹' + chickenPriceNum.toFixed(2) + '</p>' +
-                '<p>Fry and Dum (ఫ్రై మరియు దం): ₹' + fryAndDumAmount.toFixed(2) + '</p>' +
+                '<p>Fry and Dum (ఫ్రై మరియు ధమ్ ): ₹' + fryAndDumAmount.toFixed(2) + '</p>' +
                 '<p>Chicken Bill (చికెన్ బిల్): ₹' + chickenBill.toFixed(2) + '</p>' +
                 '<p>Previous Balance (మునుపటి సమయంలో బాకి): ₹' + previousBalanceNum.toFixed(2) + '</p>' +
                 '<p>Paid Amount (చెల్లింపు మొత్తం): ₹' + paidAmountNum.toFixed(2) + '</p>' +
@@ -143,7 +143,29 @@
         <label for="date">Date (తేది):</label>
         <input type="date" id="date" name="date" required>
 
-        <!-- Remaining input fields remain unchanged -->
+        <label for="weight">Boneless (kg) (బోన్లెస్ బరువు):</label>
+        <input type="number" id="weight" name="weight" step="0.01" required>
+
+        <label for="chickenWeight">Chicken weight (kg) (కోడి బరువు):</label>
+        <input type="number" id="chickenWeight" name="chickenWeight" step="0.01" required>
+
+        <label for="chickenQuantity">Chicken Quantity (కోడి సాంఖ్య):</label>
+        <input type="number" id="chickenQuantity" name="chickenQuantity" step="1" required>
+
+        <label for="chickenPrice">Chicken Price (చికెన్ ధర):</label>
+        <input type="number" id="chickenPrice" name="chickenPrice" step="0.01" required>
+
+        <label for="cuttingCharges">Cutting Charges (కటింగ్ ఛార్జ్):</label>
+        <input type="number" id="cuttingCharges" name="cuttingCharges" step="0.01" required>
+
+        <label for="bonelessPrice">Boneless Price (బోన్లెస్ ధర):</label>
+        <input type="number" id="bonelessPrice" name="bonelessPrice" step="0.01" required>
+
+        <label for="previousBalance">Previous Balance (మునుపటి సమయంలో బాకి):</label>
+        <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
+
+        <label for="paidAmount">Paid Amount (చెల్లింపు మొత్తం):</label>
+        <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
 
         <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
         <button type="button" onclick="exportBillAsImage()">Export Bill as Image (బిల్ ఎగుమతి)</button>
