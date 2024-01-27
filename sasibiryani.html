@@ -56,14 +56,20 @@
         #billDetails {
             margin-top: 20px;
             text-align: left;
+            font-size: 14px;
         }
 
         #billDetails h3 {
             margin-bottom: 10px;
+            font-size: 18px;
         }
 
-        #pricePerKgTelugu {
-            font-family: 'Gidugu', sans-serif;
+        #billDetails p {
+            margin: 5px 0;
+        }
+
+        #billDetails span {
+            font-weight: bold;
         }
     </style>
 
@@ -72,15 +78,15 @@
             var date = document.getElementById('date').value;
 
             // Get item weights and other values
-            var weightFryNum = parseFloat(document.getElementById('weightFry').value);
-            var weightDumNum = parseFloat(document.getElementById('weightDum').value);
-            var weightBonelessNum = parseFloat(document.getElementById('weightBoneless').value);
-            var weightJointNum = parseFloat(document.getElementById('weightJoint').value);
-            var weightKababNum = parseFloat(document.getElementById('weightKabab').value);
+            var weightFryNum = parseFloat(document.getElementById('weightFry').value) || 0;
+            var weightDumNum = parseFloat(document.getElementById('weightDum').value) || 0;
+            var weightBonelessNum = parseFloat(document.getElementById('weightBoneless').value) || 0;
+            var weightJointNum = parseFloat(document.getElementById('weightJoint').value) || 0;
+            var weightKababNum = parseFloat(document.getElementById('weightKabab').value) || 0;
 
-            var paperRateNum = parseFloat(document.getElementById('paperRate').value);
-            var previousBalanceNum = parseFloat(document.getElementById('previousBalance').value);
-            var paidAmountNum = parseFloat(document.getElementById('paidAmount').value);
+            var paperRateNum = parseFloat(document.getElementById('paperRate').value) || 0;
+            var previousBalanceNum = parseFloat(document.getElementById('previousBalance').value) || 0;
+            var paidAmountNum = parseFloat(document.getElementById('paidAmount').value) || 0;
 
             // Calculate total weight of items
             var totalWeight = weightFryNum + weightDumNum + weightBonelessNum + weightJointNum + weightKababNum;
@@ -89,7 +95,7 @@
             var billAmount = paperRateNum * 1.7 * totalWeight;
 
             // Calculate price per kg
-            var pricePerKg = billAmount / totalWeight;
+            var pricePerKg = totalWeight === 0 ? 0 : billAmount / totalWeight;
 
             // Calculate the new total balance
             var newTotalBalance = previousBalanceNum + billAmount - paidAmountNum;
@@ -97,28 +103,28 @@
             // Display the bill details on the webpage
             var billDetails = document.getElementById('billDetails');
             billDetails.innerHTML =
-                '<h3>Bill Details (బిల్ వివరాలు):</h3>' +
-                '<p>Restaurant (హోటల్): Sasi Biryani</p>' +
-                '<p>Date (తేది): ' + date + '</p>' +
-                '<p>Fry (kg) (ఫ్రై బరువు): ' + weightFryNum + '</p>' +
-                '<p>Dum (kg) (ధమ్ బరువు): ' + weightDumNum + '</p>' +
-                '<p>Boneless (kg) (బోన్లెస్ బరువు): ' + weightBonelessNum + '</p>' +
-                '<p>Joint (kg) (జాయింట్ బరువు): ' + weightJointNum + '</p>' +
-                '<p>Kabab (kg) (కబాబ్ బరువు): ' + weightKababNum + '</p>' +
-                '<p>Total Weight (అంశాల మొత్తం): ' + totalWeight.toFixed(2) + ' kg</p>' +
-                '<p>Paper Rate (చికెన్ పేపర్ రేట్): ₹' + paperRateNum.toFixed(2) + '</p>' +
-                '<p>Bill Amount (బిల్ మొత్తం): ₹' + billAmount.toFixed(2) + '</p>' +
-                '<p>Price Per Kg (కిలో ధర): ₹' + pricePerKg.toFixed(2) + '</p>' +
-                '<p>Previous Balance (బాకి): ₹' + previousBalanceNum.toFixed(2) + '</p>' +
-                '<p>Paid Amount (చెల్లింపు మొత్తం): ₹' + paidAmountNum.toFixed(2) + '</p>' +
-                '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹' + newTotalBalance.toFixed(2) + '</p>';
+                '<h3>Bill Details:</h3>' +
+                '<p>Sasi Biryani</p>' +
+                '<p>Date: <span>' + date + '</span></p>' +
+                '<p>Fry (kg): <span>' + weightFryNum + '</span></p>' +
+                '<p>Dum (kg): <span>' + weightDumNum + '</span></p>' +
+                '<p>Boneless (kg): <span>' + weightBonelessNum + '</span></p>' +
+                '<p>Joint (kg): <span>' + weightJointNum + '</span></p>' +
+                '<p>Kabab (kg): <span>' + weightKababNum + '</span></p>' +
+                '<p>Total Weight: <span>' + totalWeight.toFixed(2) + '</span> kg</p>' +
+                '<p>Paper Rate: ₹<span>' + paperRateNum.toFixed(2) + '</span></p>' +
+                '<p>Bill Amount: ₹<span>' + billAmount.toFixed(2) + '</span></p>' +
+                '<p>Price Per Kg: ₹<span>' + pricePerKg.toFixed(2) + '</span></p>' +
+                '<p>Previous Balance: ₹<span>' + previousBalanceNum.toFixed(2) + '</span></p>' +
+                '<p>Paid Amount: ₹<span>' + paidAmountNum.toFixed(2) + '</span></p>' +
+                '<p>New Balance: ₹<span>' + newTotalBalance.toFixed(2) + '</span></p>';
         }
 
         function exportBillAsImage() {
             var date = document.getElementById('date').value;
             var billDetails = document.getElementById('billDetails');
 
-            html2canvas(billDetails).then(function (canvas) {
+            html2canvas(billDetails, { width: billDetails.scrollWidth, height: billDetails.scrollHeight }).then(function (canvas) {
                 var image = canvas.toDataURL('image/png');
 
                 var link = document.createElement('a');
@@ -132,35 +138,35 @@
 
 <body>
     <form id="billForm">
-        <label for="date">Date (తేది):</label>
+        <label for="date">Date:</label>
         <input type="date" id="date" name="date" required>
 
-        <label for="weightFry">Fry (kg) (ఫ్రై బరువు):</label>
+        <label for="weightFry">Fry (kg):</label>
         <input type="number" id="weightFry" name="weightFry" step="0.01" required>
 
-        <label for="weightDum">Dum (kg) (ధమ్ బరువు):</label>
+        <label for="weightDum">Dum (kg):</label>
         <input type="number" id="weightDum" name="weightDum" step="0.01" required>
 
-        <label for="weightBoneless">Boneless (kg) (బోన్లెస్ బరువు):</label>
+        <label for="weightBoneless">Boneless (kg):</label>
         <input type="number" id="weightBoneless" name="weightBoneless" step="0.01" required>
 
-        <label for="weightJoint">Joint (kg) (జాయింట్ బరువు):</label>
+        <label for="weightJoint">Joint (kg):</label>
         <input type="number" id="weightJoint" name="weightJoint" step="0.01" required>
 
-        <label for="weightKabab">Kabab (kg) (కబాబ్ బరువు):</label>
+        <label for="weightKabab">Kabab (kg):</label>
         <input type="number" id="weightKabab" name="weightKabab" step="0.01" required>
 
-        <label for="paperRate">Paper Rate of Chicken (చికెన్ పేపర్ రేట్):</label>
+        <label for="paperRate">Paper Rate of Chicken:</label>
         <input type="number" id="paperRate" name="paperRate" step="0.01" required>
 
-        <label for="previousBalance">Previous Balance (బాకి):</label>
+        <label for="previousBalance">Previous Balance:</label>
         <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
 
-        <label for="paidAmount">Paid Amount (చెల్లింపు మొత్తం):</label>
+        <label for="paidAmount">Paid Amount:</label>
         <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
 
-        <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
-        <button type="button" onclick="exportBillAsImage()">Export Bill as Image (బిల్ ఎగుమతి)</button>
+        <button type="button" onclick="calculateBill()">Calculate Bill</button>
+        <button type="button" onclick="exportBillAsImage()">Export Bill as Image</button>
 
         <div id="billDetails"></div>
     </form>
