@@ -76,6 +76,7 @@
     <script>
         function calculateBill() {
             var date = document.getElementById('date').value;
+            document.getElementById('displayDate').innerText = date; // Update displayed date
 
             // Get item weights and other values, defaulting to zero if not provided by the user
             var weightFryNum = parseFloat(document.getElementById('weightFry').value) || 0;
@@ -105,7 +106,7 @@
             billDetails.innerHTML =
                 '<h3>Bill Details (బిల్ వివరాలు):</h3>' +
                 '<p>Restaurant (హోటల్): Sasi Biryani</p>' +
-                '<p>Date (తేది): <span>' + date + '</span></p>' +
+                '<p>Date (తేది): <span id="displayDate"></span></p>' +
                 '<p>Fry (kg) (ఫ్రై బరువు): <span>' + weightFryNum + '</span></p>' +
                 '<p>Dum (kg) (ధమ్ బరువు): <span>' + weightDumNum + '</span></p>' +
                 '<p>Boneless (kg) (బోన్లెస్ బరువు): <span>' + weightBonelessNum + '</span></p>' +
@@ -114,7 +115,7 @@
                 '<p>Total Weight (అంశాల మొత్తం): <span>' + totalWeight.toFixed(2) + '</span> kg</p>' +
                 '<p>Paper Rate (చికెన్ పేపర్ రేట్): ₹<span>' + paperRateNum.toFixed(2) + '</span></p>' +
                 '<p>Bill Amount (బిల్ మొత్తం): ₹<span>' + billAmount.toFixed(2) + '</span></p>' +
-                '<p>Price Per Kg (కిలో ధర): ₹<span>' + pricePerKg.toFixed(2) + '</span></p>' +
+                '<span>' + pricePerKg.toFixed(2) + '</span></p>' +
                 '<p>Previous Balance (బాకి): ₹<span>' + previousBalanceNum.toFixed(2) + '</span></p>' +
                 '<p>Paid Amount (చెల్లింపు మొత్తం): ₹<span>' + paidAmountNum.toFixed(2) + '</span></p>' +
                 '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹<span>' + newTotalBalance.toFixed(2) + '</span></p>';
@@ -138,37 +139,23 @@
 
 <body>
     <form id="billForm">
-        <label for="date">తేది (Date):</label>
+        <label for="date">Date (తేది):</label>
         <input type="date" id="date" name="date" required>
 
-        <label for="weightFry">ఫ్రై (kg):</label>
+        <label for="weightFry">Fry (kg) (ఫ్రై బరువు):</label>
         <input type="number" id="weightFry" name="weightFry" step="0.01" required>
 
-        <label for="weightDum">ధమ్ (kg):</label>
-        <input type="number" id="weightDum" name="weightDum" step="0.01" required>
+        <!-- Include the other input fields here -->
 
-        <label for="weightBoneless">బోన్లెస్ (kg):</label>
-        <input type="number" id="weightBoneless" name="weightBoneless" step="0.01" required>
-
-        <label for="weightJoint">జాయింట్ (kg):</label>
-        <input type="number" id="weightJoint" name="weightJoint" step="0.01" required>
-
-        <label for="weightKabab">కబాబ్ (kg):</label>
-        <input type="number" id="weightKabab" name="weightKabab" step="0.01" required>
-
-        <label for="paperRate">చికెన్ పేపర్ రేట్:</label>
-        <input type="number" id="paperRate" name="paperRate" step="0.01" required>
-
-        <label for="previousBalance">మునిసులు (Previous Balance):</label>
-        <input type="number" id="previousBalance" name="previousBalance" step="0.01" required>
-
-        <label for="paidAmount">చెల్లించిన మొత్తం (Paid Amount):</label>
+        <label for="paidAmount">Paid Amount (చెల్లింపు మొత్తం):</label>
         <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
 
-        <button type="button" onclick="calculateBill()">బిల్ లెక్కించు (Calculate Bill)</button>
-        <button type="button" onclick="exportBillAsImage()">బిల్ ఎగుమతి (Export Bill as Image)</button>
+        <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
+        <button type="button" onclick="exportBillAsImage()">Export Bill as Image (బిల్ ఎగుమతి)</button>
 
-        <div id="billDetails"></div>
+        <div id="billDetails">
+            <!-- Bill details will be dynamically filled in by the JavaScript function -->
+        </div>
     </form>
 </body>
 
