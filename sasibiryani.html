@@ -121,18 +121,27 @@
                 '<p>New Total Balance (కొత్త మొత్తం స్థితి): ₹<span>' + newTotalBalance.toFixed(2) + '</span></p>';
         }
 
-        function exportBillAsImage() {
+        async function exportBillAsImage() {
             var date = document.getElementById('date').value;
             var billDetails = document.getElementById('billDetails');
 
-            html2canvas(billDetails, { width: billDetails.scrollWidth, height: billDetails.scrollHeight }).then(function (canvas) {
-                var image = canvas.toDataURL('image/png');
-
-                var link = document.createElement('a');
-                link.href = image;
-                link.download = 'sasibiryani_' + date + '.png';
-                link.click();
+            // Create a promise to handle the asynchronous rendering
+            var canvasPromise = new Promise((resolve) => {
+                html2canvas(billDetails, { width: billDetails.scrollWidth, height: billDetails.scrollHeight })
+                    .then(function (canvas) {
+                        resolve(canvas);
+                    });
             });
+
+            // Wait for the promise to resolve before proceeding
+            var canvas = await canvasPromise;
+
+            // Convert the canvas to image and trigger download
+            var image = canvas.toDataURL('image/png');
+            var link = document.createElement('a');
+            link.href = image;
+            link.download = 'sasibiryani_' + date + '.png';
+            link.click();
         }
     </script>
 </head>
