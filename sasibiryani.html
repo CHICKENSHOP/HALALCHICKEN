@@ -114,7 +114,17 @@
             var date = document.getElementById('date').value;
             var billDetails = document.getElementById('billDetails');
 
-            html2canvas(billDetails).then(function (canvas) {
+            html2canvas(billDetails, {
+                x: -10,
+                y: -10,
+                width: billDetails.offsetWidth + 20, // Adding padding of 10px on each side
+                height: billDetails.offsetHeight + 20, // Adding padding of 10px on each side
+                windowWidth: billDetails.offsetWidth + 20,
+                windowHeight: billDetails.offsetHeight + 20,
+                scrollX: 0,
+                scrollY: 0,
+                useCORS: true
+            }).then(function (canvas) {
                 var image = canvas.toDataURL('image/png');
 
                 var link = document.createElement('a');
