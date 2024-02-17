@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polavaram - Bill Generator</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #billDetails {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        #pricePerKgTelugu {
+            font-family: 'Gidugu', sans-serif;
+        }
+    </style>
+
+    <script>
+        function calculateBill() {
+            var date = document.getElementById('date').value;
+
+            // Get item weights and prices
+            var weightBoneless = parseFloat(document.getElementById('weightBoneless').value) || 0;
+            var priceBoneless = parseFloat(document.getElementById('priceBoneless').value) || 0;
+
+            var weightLolipop = parseFloat(document.getElementById('weightLolipop').value) || 0;
+            var priceLolipop = parseFloat(document.getElementById('priceLolipop').value) || 0;
+
+            var weightChicken = parseFloat(document.getElementById('weightChicken').value) || 0;
+            var priceChicken = parseFloat(document.getElementById('priceChicken').value) || 0;
+            var quantityChicken = parseFloat(document.getElementById('quantityChicken').value) || 0;
+
+            var cuttingCharges = parseFloat(document.getElementById('cuttingCharges').value) || 0;
+
+            // Calculate fry bill
+            var fryBill = (quantityChicken * cuttingCharges) + (weightChicken * priceChicken);
+
+            // Calculate total bill amount
+            var totalBillAmount = (weightBoneless * priceBoneless) + (weightLolipop * priceLolipop) + fryBill;
+
+            // Display the bill details on the webpage
+            var billDetails = document.getElementById('billDetails');
+            billDetails.innerHTML = '<h3>Bill Details:</h3>' +
+                '<p>Restaurant: Polavaram</p>' +
+                '<p>Date: ' + date + '</p>' +
+                '<p>Weight of Boneless Chicken: ' + weightBoneless.toFixed(2) + ' kg, Price: ₹' + priceBoneless.toFixed(2) + ' per kg</p>' +
+                '<p>Weight of Lolipop Chicken: ' + weightLolipop.toFixed(2) + ' kg, Price: ₹' + priceLolipop.toFixed(2) + ' per kg</p>' +
+                '<p>Quantity of Regular Chicken: ' + quantityChicken + ' kg, Price: ₹' + priceChicken.toFixed(2) + ' per kg</p>' +
+                '<p>Cutting Charges: ₹' + cuttingCharges.toFixed(2) + '</p>' +
+                '<p>Fry Bill: ₹' + fryBill.toFixed(2) + '</p>' +
+                '<p>Total Bill Amount: ₹' + totalBillAmount.toFixed(2) + '</p>';
+        }
+
+        function exportBillAsImage() {
+            var date = document.getElementById('date').value;
+            var billDetails = document.getElementById('billDetails');
+
+            html2canvas(billDetails).then(function (canvas) {
+                var image = canvas.toDataURL('image/png');
+
+                var link = document.createElement('a');
+                link.href = image;
+                link.download = 'polavaram_' + date + '.png';
+                link.click();
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <form id="billForm">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="weightBoneless">Weight of Boneless Chicken (kg):</label>
+        <input type="number" id="weightBoneless" name="weightBoneless" step="0.01" required>
+        <label for="priceBoneless">Price per kg (₹):</label>
+        <input type="number" id="priceBoneless" name="priceBoneless" step="0.01" required>
+
+        <label for="weightLolipop">Weight of Lolipop Chicken (kg):</label>
+        <input type="number" id="weightLolipop" name="weightLolipop" step="0.01" required>
+        <label for="priceLolipop">Price per kg (₹):</label>
+        <input type="number" id="priceLolipop" name="priceLolipop" step="0.01" required>
+
+        <label for="weightChicken">Weight of Regular Chicken (kg):</label>
+        <input type="number" id="weightChicken" name="weightChicken" step="0.01" required>
+        <label for="priceChicken">Price per kg (₹):</label>
+        <input type="number" id="priceChicken" name="priceChicken" step="0.01" required>
+        <label for="quantityChicken">Quantity (kg):</label>
+        <input type="number" id="quantityChicken" name="quantityChicken" step="0.01" required>
+
+        <label for="cuttingCharges">Cutting Charges (₹):</label>
+        <input type="number" id="cuttingCharges" name="cuttingCharges" step="0.01" required>
+
+        <button type="button" onclick="calculateBill()">Calculate Bill</button>
+        <button type="button" onclick="exportBillAsImage()">Export Bill as Image</button>
+
+        <div id="billDetails"></div>
+    </form>
+</body>
+
+</html>
