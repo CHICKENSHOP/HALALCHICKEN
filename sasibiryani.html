@@ -58,10 +58,6 @@
             text-align: left;
         }
 
-        #billDetails h3 {
-            margin-bottom: 10px;
-        }
-
         #pricePerKgTelugu {
             font-family: 'Gidugu', sans-serif;
         }
@@ -72,15 +68,15 @@
             var date = document.getElementById('date').value;
 
             // Get item weights and other values
-            var weightFryNum = parseFloat(document.getElementById('weightFry').value);
-            var weightDumNum = parseFloat(document.getElementById('weightDum').value);
-            var weightBonelessNum = parseFloat(document.getElementById('weightBoneless').value);
-            var weightJointNum = parseFloat(document.getElementById('weightJoint').value);
-            var weightKababNum = parseFloat(document.getElementById('weightKabab').value);
+            var weightFryNum = parseFloat(document.getElementById('weightFry').value) || 0;
+            var weightDumNum = parseFloat(document.getElementById('weightDum').value) || 0;
+            var weightBonelessNum = parseFloat(document.getElementById('weightBoneless').value) || 0;
+            var weightJointNum = parseFloat(document.getElementById('weightJoint').value) || 0;
+            var weightKababNum = parseFloat(document.getElementById('weightKabab').value) || 0;
 
-            var paperRateNum = parseFloat(document.getElementById('paperRate').value);
-            var previousBalanceNum = parseFloat(document.getElementById('previousBalance').value);
-            var paidAmountNum = parseFloat(document.getElementById('paidAmount').value);
+            var paperRateNum = parseFloat(document.getElementById('paperRate').value) || 0;
+            var previousBalanceNum = parseFloat(document.getElementById('previousBalance').value) || 0;
+            var paidAmountNum = parseFloat(document.getElementById('paidAmount').value) || 0;
 
             // Calculate total weight of items
             var totalWeight = weightFryNum + weightDumNum + weightBonelessNum + weightJointNum + weightKababNum;
