@@ -147,7 +147,7 @@
 </head>
 
 <body>
-    <form id="billForm">
+    <form id="billForm" onsubmit="event.preventDefault(); calculateBill();">
         <label for="date">Date (తేది):</label>
         <input type="date" id="date" name="date" required>
 
@@ -175,7 +175,7 @@
         <label for="paidAmount">Paid Amount (చెల్లింపు మొత్తం):</label>
         <input type="number" id="paidAmount" name="paidAmount" step="0.01" required>
 
-        <button type="button" onclick="calculateBill()">Calculate Bill (బిల్ లెక్కించు)</button>
+        <button type="submit">Calculate Bill (బిల్ లెక్కించు)</button>
         <button type="button" onclick="exportBillAsImage()">Export Bill as Image (బిల్ ఎగుమతి)</button>
 
         <div id="billDetails">
