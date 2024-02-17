@@ -92,15 +92,14 @@
 
             // Display the bill details on the webpage
             var billDetails = document.getElementById('billDetails');
-            billDetails.innerHTML =
-                '<h3>Bill Details (బిల్ వివరాలు):</h3>' +
+            billDetails.innerHTML = '<h3>Bill Details (బిల్ వివరాలు):</h3>' +
                 '<p>Restaurant (హోటల్): Sasi Biryani</p>' +
                 '<p>Date (తేది): ' + date + '</p>' +
-                '<p>Fry (kg) (ఫ్రై బరువు): ' + weightFryNum + '</p>' +
-                '<p>Dum (kg) (ధమ్ బరువు): ' + weightDumNum + '</p>' +
-                '<p>Boneless (kg) (బోన్లెస్ బరువు): ' + weightBonelessNum + '</p>' +
-                '<p>Joint (kg) (జాయింట్ బరువు): ' + weightJointNum + '</p>' +
-                '<p>Kabab (kg) (కబాబ్ బరువు): ' + weightKababNum + '</p>' +
+                (weightFryNum ? '<p>Fry (kg) (ఫ్రై బరువు): ' + weightFryNum + '</p>' : '') +
+                (weightDumNum ? '<p>Dum (kg) (ధమ్ బరువు): ' + weightDumNum + '</p>' : '') +
+                (weightBonelessNum ? '<p>Boneless (kg) (బోన్లెస్ బరువు): ' + weightBonelessNum + '</p>' : '') +
+                (weightJointNum ? '<p>Joint (kg) (జాయింట్ బరువు): ' + weightJointNum + '</p>' : '') +
+                (weightKababNum ? '<p>Kabab (kg) (కబాబ్ బరువు): ' + weightKababNum + '</p>' : '') +
                 '<p>Total Weight (అంశాల మొత్తం): ' + totalWeight.toFixed(2) + ' kg</p>' +
                 '<p>Paper Rate (చికెన్ పేపర్ రేట్): ₹' + paperRateNum.toFixed(2) + '</p>' +
                 '<p>Bill Amount (బిల్ మొత్తం): ₹' + billAmount.toFixed(2) + '</p>' +
@@ -114,17 +113,7 @@
             var date = document.getElementById('date').value;
             var billDetails = document.getElementById('billDetails');
 
-            html2canvas(billDetails, {
-                x: -10,
-                y: -10,
-                width: billDetails.offsetWidth + 20, // Adding padding of 10px on each side
-                height: billDetails.offsetHeight + 20, // Adding padding of 10px on each side
-                windowWidth: billDetails.offsetWidth + 20,
-                windowHeight: billDetails.offsetHeight + 20,
-                scrollX: 0,
-                scrollY: 0,
-                useCORS: true
-            }).then(function (canvas) {
+            html2canvas(billDetails).then(function (canvas) {
                 var image = canvas.toDataURL('image/png');
 
                 var link = document.createElement('a');
