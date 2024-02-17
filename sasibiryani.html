@@ -55,16 +55,7 @@
 
         #billDetails {
             margin-top: 20px;
-            text-align: center; /* Horizontal alignment */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Vertical alignment */
-            align-items: center; /* Horizontal alignment */
-            background-image: url('your_image_url_here'); /* Your background image URL */
-            background-color: #ffffff; /* Fallback background color */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
         }
 
         #pricePerKgTelugu {
@@ -101,27 +92,14 @@
 
             // Display the bill details on the webpage
             var billDetails = document.getElementById('billDetails');
-            billDetails.innerHTML =
-                '<h3>Bill Details (బిల్ వివరాలు):</h3>' +
+            billDetails.innerHTML = '<h3>Bill Details (బిల్ వివరాలు):</h3>' +
                 '<p>Restaurant (హోటల్): Sasi Biryani</p>' +
-                '<p>Date (తేది): ' + date + '</p>';
-            if (weightFryNum > 0) {
-                billDetails.innerHTML += '<p>Fry (kg) (ఫ్రై బరువు): ' + weightFryNum + '</p>';
-            }
-            if (weightDumNum > 0) {
-                billDetails.innerHTML += '<p>Dum (kg) (ధమ్ బరువు): ' + weightDumNum + '</p>';
-            }
-            if (weightBonelessNum > 0) {
-                billDetails.innerHTML += '<p>Boneless (kg) (బోన్లెస్ బరువు): ' + weightBonelessNum + '</p>';
-            }
-            if (weightJointNum > 0) {
-                billDetails.innerHTML += '<p>Joint (kg) (జాయింట్ బరువు): ' + weightJointNum + '</p>';
-            }
-            if (weightKababNum > 0) {
-                billDetails.innerHTML += '<p>Kabab (kg) (కబాబ్ బరువు): ' + weightKababNum + '</p>';
-            }
-
-            billDetails.innerHTML +=
+                '<p>Date (తేది): ' + date + '</p>' +
+                (weightFryNum ? '<p>Fry (kg) (ఫ్రై బరువు): ' + weightFryNum + '</p>' : '') +
+                (weightDumNum ? '<p>Dum (kg) (ధమ్ బరువు): ' + weightDumNum + '</p>' : '') +
+                (weightBonelessNum ? '<p>Boneless (kg) (బోన్లెస్ బరువు): ' + weightBonelessNum + '</p>' : '') +
+                (weightJointNum ? '<p>Joint (kg) (జాయింట్ బరువు): ' + weightJointNum + '</p>' : '') +
+                (weightKababNum ? '<p>Kabab (kg) (కబాబ్ బరువు): ' + weightKababNum + '</p>' : '') +
                 '<p>Total Weight (అంశాల మొత్తం): ' + totalWeight.toFixed(2) + ' kg</p>' +
                 '<p>Paper Rate (చికెన్ పేపర్ రేట్): ₹' + paperRateNum.toFixed(2) + '</p>' +
                 '<p>Bill Amount (బిల్ మొత్తం): ₹' + billAmount.toFixed(2) + '</p>' +
