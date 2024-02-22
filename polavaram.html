@@ -61,7 +61,41 @@
         }
     </style>
     <script>
-        // JavaScript functions remain unchanged
+        function calculateBill() {
+            var bonelessWeight = parseFloat(document.getElementById('bonelessWeight').value) || 0;
+            var bonelessPrice = parseFloat(document.getElementById('bonelessPrice').value) || 0;
+            var lollipopWeight = parseFloat(document.getElementById('lollipopWeight').value) || 0;
+            var lollipopPrice = parseFloat(document.getElementById('lollipopPrice').value) || 0;
+            var chickenWeight = parseFloat(document.getElementById('chickenWeight').value) || 0;
+            var chickenPrice = parseFloat(document.getElementById('chickenPrice').value) || 0;
+            var chickenQuantity = parseInt(document.getElementById('chickenQuantity').value) || 0;
+            var cuttingCharges = parseFloat(document.getElementById('cuttingCharges').value) || 0;
+
+            var bonelessBill = bonelessWeight * bonelessPrice;
+            var lollipopBill = lollipopWeight * lollipopPrice;
+            var fryBill = chickenWeight * chickenPrice * chickenQuantity + cuttingCharges * chickenQuantity;
+            var totalBill = bonelessBill + lollipopBill + fryBill;
+
+            var billDetails = document.getElementById('billDetails');
+            billDetails.innerHTML = '<h3>Bill Details (బిల్ వివరాలు):</h3>' +
+                '<p>Boneless Bill (బోన్లెస్ బిల్): ₹' + bonelessBill.toFixed(2) + '</p>' +
+                '<p>Lollipop Bill (లాలిపాప్ బిల్): ₹' + lollipopBill.toFixed(2) + '</p>' +
+                '<p>Fry Bill (ఫ్రై బిల్): ₹' + fryBill.toFixed(2) + '</p>' +
+                '<p>Total Bill (మొత్తం బిల్): ₹' + totalBill.toFixed(2) + '</p>';
+        }
+
+        function exportBillAsImage() {
+            var billDetails = document.getElementById('billDetails');
+
+            html2canvas(billDetails).then(function (canvas) {
+                var image = canvas.toDataURL('image/png');
+
+                var link = document.createElement('a');
+                link.href = image;
+                link.download = 'polavaram_bill.png';
+                link.click();
+            });
+        }
     </script>
 </head>
 <body>
